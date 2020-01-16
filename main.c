@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
+/*   Updated: 2020/01/16 18:17:50 by floblanc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft/libft.h"
 #include "include/ft_ls.h"
 
@@ -30,6 +42,23 @@ void	ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 	}
 }
 
+int		flag_stocker(char letter, int *flag)
+{
+	int	i;
+
+	i = 0;
+	while (FLAGS[i])
+	{
+		if (FLAGS[i] == letter)
+		{
+			*flags = *flags | ft_pow(2 ,i);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	ft_get_flag(t_ls *ls, int argc, char **argv)
 {
 	int i;
@@ -45,10 +74,8 @@ void	ft_get_flag(t_ls *ls, int argc, char **argv)
 			j = 1;
 			while(argv[i][j])
 			{
-				if (argv[i][j] == 'a')
-					ls->flag = ls->flag | A;
-				else if (argv[i][j] == 'l')
-					ls->flag = ls->flag & L;
+				if (!(flag_stocker(argv[i][j], &(ls->flag))))
+					ft_exit(1, argv[i][j]);
 				j++;
 			}
 		}
@@ -75,20 +102,20 @@ int		main(int argc, char **argv)
 	{
 		// printf("to read = %s\n", *ls.to_read);
 		if ((rep = opendir(*ls.to_read)) == NULL)
-		{
 			perror("ft_ls ");
-			exit(0);
-		}
-		while ((dir = readdir(rep)) != NULL)
+		else
 		{
-			// printf("flag = %d - is -a : %d\n", ls.flag, (ls.flag & A));
-			if (dir->d_name[0] != '.' || ls.flag & A)
-			printf("%s\n", dir->d_name);
+			while ((dir = readdir(rep)) != NULL)
+			{
+				// printf("flag = %d - is -a : %d\n", ls.flag, (ls.flag & A));
+				if (dir->d_name[0] != '.' || ls.flag & A)
+				printf("%s\n", dir->d_name);
+			}
+			closedir(rep);
+			ls.to_read++;
+			if (*ls.to_read)
+				printf("\n%s:\n", *ls.to_read);
 		}
-		closedir(rep);
-		ls.to_read++;
-		if (*ls.to_read)
-			printf("\n%s:\n", *ls.to_read);
 	}
 	// if ((dir = readdir(rep)) == NULL)
 		// perror("Error ");

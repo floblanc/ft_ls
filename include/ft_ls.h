@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/16 14:12:01 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/16 18:19:09 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,19 @@
 # include <sys/xattr.h>
 # include "libprintf.h"
 
-# define A 1
-# define L 2
+# define AMAJ 1
+# define FMAJ 2
+# define RMAJ 4
+# define SMAJ 8
+# define AMIN 16
+# define DMIN 32
+# define HMIN 64
+# define LMIN 128
+# define PMIN 256
+# define RMIN 512
+# define SMIN 1028
+# define TMIN 2048
+# define FLAGS "AFRSadhlprst"
 
 typedef struct	s_ls
 {
