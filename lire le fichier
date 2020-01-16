@@ -1,0 +1,12 @@
+prog (dossier)
+{
+	while (dossier)
+	{
+		lire le fichier
+		trier
+		afficher
+		free(data->file) (keep name and type)
+		if (dossier enfant)
+			prog (dossier enfant)
+	}
+}
