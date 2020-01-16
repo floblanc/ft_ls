@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/16 18:19:09 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/16 19:06:16 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # include <fcntl.h>
 # include <sys/uio.h>
 # include <sys/xattr.h>
-# include "libprintf.h"
+// # include "../libftprintf/include/libprintf.h"
+#include "../libft/libft.h"
 
 # define AMAJ 1
 # define FMAJ 2
@@ -46,5 +47,9 @@ typedef struct	s_ls
 	int			flag;
 	char		**to_read;
 }				t_ls;
+
+void	ft_get_flag(t_ls *ls, int argc, char **argv);
+
+void	ft_exit(int mode, char c);
 
 #endif
