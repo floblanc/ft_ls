@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/16 19:06:16 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/19 22:23:49 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,38 @@
 # define TMIN 2048
 # define FLAGS "AFRSadhlprst"
 
-typedef struct	s_ls
+typedef struct		s_long_format
 {
-	int			flag;
-	char		**to_read;
-}				t_ls;
+	// char			*name;
+	char			name[256];
+	unsigned char	type;
+	// dev_t			st_dev;     /* ID of device containing file */
+	// ino_t			st_ino;		/* inode number */
+	// mode_t			st_mode;	/* protection */
+	// nlink_t			st_nlink;	/* number of hard links */
+	// uid_t			st_uid;		/* user ID of owner */
+	// gid_t			st_gid;		/* group ID of owner */
+	// dev_t			st_rdev;	/* device ID (if special file) */
+	// off_t			st_size;	/* total size, in bytes */
+	// blksize_t		st_blksize;	/* blocksize for file system I/O */
+	// blkcnt_t			st_blocks;	/* number of 512B blocks allocated */
+	// time_t			st_atime;	/* time of last access */
+	// time_t			st_mtime;	/* time of last modification */
+	// time_t			st_ctime;	/* time of last status change */
+}					t_long_format;
+
+typedef struct		s_ls
+{
+	int				flag;
+	char			**to_read;
+	int				size;
+	t_long_format	*lf;
+}					t_ls;
 
 void	ft_get_flag(t_ls *ls, int argc, char **argv);
 
 void	ft_exit(int mode, char c);
+
+void	ft_affich(t_ls *ls);
 
 #endif
