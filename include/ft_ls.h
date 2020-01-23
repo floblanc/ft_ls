@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/19 22:23:49 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:11:32 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define TMIN 2048
 # define FLAGS "AFRSadhlprst"
 
-typedef struct		s_long_format
+typedef struct		s_lf
 {
 	// char			*name;
 	char			name[256];
@@ -60,14 +60,14 @@ typedef struct		s_long_format
 	// time_t			st_atime;	/* time of last access */
 	// time_t			st_mtime;	/* time of last modification */
 	// time_t			st_ctime;	/* time of last status change */
-}					t_long_format;
+}					t_lf;
 
 typedef struct		s_ls
 {
 	int				flag;
 	char			**to_read;
 	int				size;
-	t_long_format	*lf;
+	t_lf			**file;
 }					t_ls;
 
 void	ft_get_flag(t_ls *ls, int argc, char **argv);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/19 22:41:22 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:11:44 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,30 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 	int		i;
 
 	ls->size = 0;
-	if (!(ls->lf = (t_long_format*)malloc(sizeof(t_long_format) * (size + 1))))
+	if (!(ls->file = (t_lf**)malloc(sizeof(t_lf*) * (size + 1))))
 		ft_exit(2, 0);
-	// ls->lf[size] = NULL;
+	ls->file[size] = NULL;
 	if ((rep = opendir(*ls->to_read)) == NULL)
 		perror("ft_ls ");
 	else
 	{
 		while ((dir = readdir(rep)) != NULL)
+		{
 			if (dir->d_name[0] != '.' || ls->flag & AMIN)
 			{
-				// ls->lf[ls->size++].name = ft_strdup(dir->d_name);
+				if (!(ls->file[ls->size] = (t_lf*)malloc(sizeof(t_lf))))
+					ft_exit(2, 0);
+				// ls->file[ls->size++].name = ft_strdup(dir->d_name);
 				i = 0;
 				while (dir->d_name[i++])
-					ls->lf[ls->size].name[i - 1] = dir->d_name[i - 1];
+					ls->file[ls->size]->name[i - 1] = dir->d_name[i - 1];
 				ls->size++;
 			}
+		}
 		closedir(rep);
 	}
 	ft_long_format(ls);
-	free(ls->lf);
+	free(ls->file);
 	return (0);
 }
 

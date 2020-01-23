@@ -8,6 +8,6 @@ void	ft_affich(t_ls *ls)
 	// printf("size = %d\n", ls->size);
 	while (i < ls->size)
 	{
-		ft_printf("%s\n", ls->lf[i++].name);
+		ft_printf("%s\n", ls->file[i++]->name);
 	}
 }
