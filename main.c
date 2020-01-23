@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/23 15:11:44 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:38:26 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 {
 	DIR		*rep;
 	struct	dirent *dir;
-	int		i;
 
 	ls->size = 0;
 	if (!(ls->file = (t_lf**)malloc(sizeof(t_lf*) * (size + 1))))
@@ -61,11 +60,7 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 			{
 				if (!(ls->file[ls->size] = (t_lf*)malloc(sizeof(t_lf))))
 					ft_exit(2, 0);
-				// ls->file[ls->size++].name = ft_strdup(dir->d_name);
-				i = 0;
-				while (dir->d_name[i++])
-					ls->file[ls->size]->name[i - 1] = dir->d_name[i - 1];
-				ls->size++;
+				ls->file[ls->size++]->name = ft_strdup(dir->d_name);//to secure
 			}
 		}
 		closedir(rep);
@@ -90,7 +85,7 @@ int		main(int argc, char **argv)
 			ft_read_dir(&ls, *ls.to_read, st.st_nlink);
 		else
 			printf("%s\n", *ls.to_read); // have to switch for affich function
-		printf("-----\nls.link = %d, ls.size = %lld\n",st.st_nlink, st.st_size);
+		// printf("-----\nls.link = %d, ls.size = %lld\n",st.st_nlink, st.st_size);
 		ls.to_read++;
 	}
 	return (0);

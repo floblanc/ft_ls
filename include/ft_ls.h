@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/23 15:11:32 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:25:20 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@
 
 typedef struct		s_lf
 {
-	// char			*name;
-	char			name[256];
+	char			*name;
+	// char			name[256];
 	unsigned char	type;
 	// dev_t			st_dev;     /* ID of device containing file */
 	// ino_t			st_ino;		/* inode number */
