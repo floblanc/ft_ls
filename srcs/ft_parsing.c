@@ -6,11 +6,11 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/23 15:58:35 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:28:20 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/ft_ls.h"
+#include "../include/ft_ls.h"
 
 static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 {

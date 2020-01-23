@@ -6,11 +6,11 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/23 17:19:44 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/23 18:06:14 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/ft_ls.h"
+#include "../include/ft_ls.h"
 
 // struct dirent {
 //     ino_t          d_ino;       /* numéro d'inœud */
@@ -30,25 +30,55 @@ void	ft_exit(int mode, char c)
 	exit(mode);
 }
 
+void	ft_show_data(t_lf *lf)
+{
+	printf("\nname : %s\n", lf->name);
+	printf("lf->mode = %d\n", lf->mode);
+	printf("lf->nb_link = %d\n", lf->nb_link);
+	printf("lf->uid = %d\n", lf->uid);
+	printf("lf->gid = %d\n", lf->gid);
+	printf("lf->size = %lld\n", lf->file_size);
+	printf("lf->mtime = %ld\n", lf->mtime);
+}
+
 int		ft_long_format(t_ls *ls)
 {
 	struct stat st;
-	if (ls->flag & LMIN)
+	int 		i;
+
+	i = 0;
+	while (i < ls->size)	
 	{
-		;
+		if (stat(ls->file[i]->name, &st) == -1)
+			perror("ft_ls ");
+		else
+		{
+			ls->file[i]->mode = st.st_mode;
+			ls->file[i]->nb_link = st.st_nlink;
+			ls->file[i]->uid = st.st_uid;
+			ls->file[i]->gid = st.st_gid;
+			ls->file[i]->file_size = st.st_size;
+			ls->file[i]->mtime = st.st_mtime;
+			// ft_show_data(ls->file[i]);
+		}
+		i++;
 	}
 	ft_affich(ls);
 	return (0);
 }
+
+// void	ft_free_ls(t_ls *ls)
+// {
+
+// }
 
 int		ft_read_dir(t_ls *ls, char *path, int size)
 {
 	DIR		*rep;
 	struct	dirent *dir;
 
-	if (!(ls->file = (t_lf**)malloc(sizeof(t_lf*) * (size + 1))))
+	if (!(ls->file = (t_lf**)ft_memalloc(sizeof(t_lf*) * (size + 1))))
 		ft_exit(2, 0);
-	ls->file[size] = NULL;
 	ls->current_path = path;
 	if ((rep = opendir(ls->current_path)) == NULL)
 		perror("ft_ls ");
@@ -58,16 +88,15 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 		{
 			if (dir->d_name[0] != '.' || ls->flag & AMIN)
 			{
-				if (!(ls->file[ls->size] = (t_lf*)malloc(sizeof(t_lf))))
-					ft_exit(2, 0);
-				if (!(ls->file[ls->size++]->name = ft_strdup(dir->d_name)))
+				if (!(ls->file[ls->size] = (t_lf*)malloc(sizeof(t_lf)))
+					|| !(ls->file[ls->size++]->name = ft_strdup(dir->d_name)))
 					ft_exit(2, 0);
 			}
 		}
 		closedir(rep);
 	}
 	ft_long_format(ls);
-	free(ls->file);
+	free(ls->file);// a developpper
 	return (0);
 }
 
@@ -89,6 +118,5 @@ int		main(int argc, char **argv)
 		// printf("-----\nls.link = %d, ls.size = %lld\n",st.st_nlink, st.st_size);
 		ls.to_read++;
 	}
-	while (1);
 	return (0);
 }
