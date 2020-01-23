@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/23 15:25:20 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:05:55 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,11 @@ typedef struct		s_ls
 	int				flag;
 	char			**to_read;
 	int				size;
+	char			*current_path;
 	t_lf			**file;
 }					t_ls;
+
+int		ft_read_dir(t_ls *ls, char *path, int size);
 
 void	ft_get_flag(t_ls *ls, int argc, char **argv);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/23 15:38:26 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:19:44 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 	DIR		*rep;
 	struct	dirent *dir;
 
-	ls->size = 0;
 	if (!(ls->file = (t_lf**)malloc(sizeof(t_lf*) * (size + 1))))
 		ft_exit(2, 0);
 	ls->file[size] = NULL;
-	if ((rep = opendir(*ls->to_read)) == NULL)
+	ls->current_path = path;
+	if ((rep = opendir(ls->current_path)) == NULL)
 		perror("ft_ls ");
 	else
 	{
@@ -60,7 +60,8 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 			{
 				if (!(ls->file[ls->size] = (t_lf*)malloc(sizeof(t_lf))))
 					ft_exit(2, 0);
-				ls->file[ls->size++]->name = ft_strdup(dir->d_name);//to secure
+				if (!(ls->file[ls->size++]->name = ft_strdup(dir->d_name)))
+					ft_exit(2, 0);
 			}
 		}
 		closedir(rep);
@@ -88,5 +89,6 @@ int		main(int argc, char **argv)
 		// printf("-----\nls.link = %d, ls.size = %lld\n",st.st_nlink, st.st_size);
 		ls.to_read++;
 	}
+	while (1);
 	return (0);
 }
