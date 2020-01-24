@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_recursif.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/24 14:31:48 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:56:02 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_recursif(t_ls *ls)
 		new_ls.flag = ls->flag;
 		path = ft_create_path(ls->current_path, ls->file[i]->name);
 		if (stat(path, &st) == -1)
-			perror("ft_ls ");
+			perror("perror ft_recursif -> ft_ls ");
 		else if (st.st_mode & S_IFDIR)
 		{
 			ft_printf("\n%s:\n", path);
