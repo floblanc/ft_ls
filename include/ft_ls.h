@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/23 18:05:24 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/24 16:07:02 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,25 @@ typedef struct		s_lf
 	// time_t			st_mtime;	/* time of last modification */
 	// time_t			st_ctime;	/* time of last status change */
 }					t_lf;
+
+// struct passwd *getpwuid(uid_t uid);
+// struct passwd {
+//     char   *pw_name;   /* Nom d'utilisateur */
+//     char   *pw_passwd; /* Mot de passe de l'utilisateur */
+//     uid_t   pw_uid;    /* Identifiant de l'utilisateur */
+//     gid_t   pw_gid;    /* Identifiant du groupe de l'utilisateur */
+//     char   *pw_gecos;  /* Nom réel */
+//     char   *pw_dir;    /* Répertoire personnel */
+//     char   *pw_shell;  /* Interpréteur de commande */
+// };
+
+// struct group *getgrgid(gid_t gid);
+// struct group {
+//     char   *gr_name;    /* Nom du groupe.          */
+//     char   *gr_passwd;  /* Mot de passe du groupe. */
+//     gid_t   gr_gid;     /* ID du groupe.           */
+//     char  **gr_mem;     /* Membres du groupe.      */
+// };
 
 typedef struct		s_ls
 {
