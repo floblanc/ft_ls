@@ -6,11 +6,50 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/24 14:47:09 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/24 17:47:10 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
+
+char	*ft_get_size(size_t size, int h_min)
+{
+	int		i;
+	char	letters[] = "BKMGTPEZY"
+	double	tmp;
+	char	*ret;
+	
+	if (h_min)
+	{
+		i = 0;
+		tmp = (double)size;
+		while(tmp / 1024 >= 1)
+		{
+			tmp /= 1024;
+			i++;
+		}
+		size = (unsigned int)tmp;
+		if (tmp >= 10)
+		{
+			if (!(ret = itoa((int)size)))
+				ft_exit(2, 0);
+			ret[ft_strlen(ret) - 2] = letters[i];
+		}
+		else
+		{
+			if (!(ret = (char*)ft_memalloc(5)))
+				ft_exit(2, 0);
+			ret[0] = (size / 10) + '0';
+			ret[1] = '.'
+			ret[2] = (size % 10) + '0';
+			ret[3] = letters[i];
+		}
+		return (ret);
+	}
+	if (!(ret = ulltoa(size)))
+		ft_exit(2, 0);
+	return (ret);
+}
 
 void	ft_bubble_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 {

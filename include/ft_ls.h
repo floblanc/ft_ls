@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/24 16:07:02 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/24 16:45:10 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ typedef struct		s_lf
 	// time_t			st_mtime;	/* time of last modification */
 	// time_t			st_ctime;	/* time of last status change */
 }					t_lf;
+
+// char *ctime(const time_t *timer)
+// example : Mon Aug 13 08:23:14 2012
 
 // struct passwd *getpwuid(uid_t uid);
 // struct passwd {
