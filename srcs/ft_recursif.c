@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/24 15:56:02 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/24 16:43:07 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_create_path(char *path, char *file)
 {
 	char	*new;
-	int		size;
+	size_t	size;
 
 	size = ft_strlen(path) + ft_strlen(file) + 2;
 	if (!(new = (char*)ft_memalloc(sizeof(char) * size)))
@@ -40,8 +40,11 @@ void	ft_recursif(t_ls *ls)
 		ft_bzero(&new_ls, sizeof(t_ls));
 		new_ls.flag = ls->flag;
 		path = ft_create_path(ls->current_path, ls->file[i]->name);
-		if (stat(path, &st) == -1)
+		if (lstat(path, &st) == -1)
+		{
+			printf("--- %s ---\n", ls->file[i]->name);
 			perror("perror ft_recursif -> ft_ls ");
+		}
 		else if (st.st_mode & S_IFDIR)
 		{
 			ft_printf("\n%s:\n", path);

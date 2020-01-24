@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/24 16:08:34 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/24 17:35:08 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,26 @@
 
 void	ft_free_ls(t_ls *ls)
 {
-	int i;
+	size_t i;
 
 	i = 0;
-	while (ls->file[i])
+	while (i < ls->size)
 	{
-		free(ls->file[i]->name);
-		free(ls->file[i]->pathname);
+		// printf("\ni = %zu\n", i);
+		// printf("1 -- %s\n", ls->file[i]->name);
+		ft_strdel(&ls->file[i]->name);
+		// printf("2 -- %s\n", ls->file[i]->pathname);
+		ft_strdel(&ls->file[i]->pathname);
+		// printf("3\n");
+		// ft_bzero(ls->file[i], sizeof(t_lf));
 		free(ls->file[i]);
+		ls->file[i] = NULL;
+		// printf("4\n");
 		i++;
 	}
+	free(ls->file);
+	ls->file = NULL;
+	// printf("end free\n");
 }
 
 void	ft_bubble_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
@@ -63,5 +73,8 @@ void	ft_affich(t_ls *ls)
 	}
 	if (ls->flag & RMAJ)
 		ft_recursif(ls);
+	printf("--- end ft_affich ---\n");
 	ft_free_ls(ls);
+	printf("--- free ok ---\n");
+
 }
