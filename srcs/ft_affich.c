@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_affich.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/23 18:05:37 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/24 14:47:09 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	ft_affich(t_ls *ls)
 	int i;
 
 	i = 0;
-	if (ls->flag & TMIN)
-		ft_bubble_sort(ls, &ft_less_t_cmp);
-	else if (ls->flag & SMAJ)
+	if (ls->flag & SMAJ)
 		ft_bubble_sort(ls, &ft_less_s_maj_cmp);
+	else if (ls->flag & TMIN)
+		ft_bubble_sort(ls, &ft_less_t_cmp);
 	else
 		ft_bubble_sort(ls, &ft_ascii_cmp);
 	while (i < ls->size)
