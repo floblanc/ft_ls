@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/24 16:45:10 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/24 17:49:01 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 
 typedef struct		s_lf
 {
+	char			*pathname;
 	char			*name;
 	unsigned char	type;
 	mode_t			mode;		/* protection */
@@ -52,6 +53,9 @@ typedef struct		s_lf
 	gid_t			gid;		/* group ID of owner */
 	off_t			file_size;		/* total size, in bytes */
 	time_t			mtime;		/* time of last modification */
+
+	char			*user;
+	char			*groupe;
 	
 	// dev_t			st_dev;     /* ID of device containing file */
 	// ino_t			st_ino;		/* inode number */

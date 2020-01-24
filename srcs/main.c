@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/23 18:06:14 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/24 16:14:56 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ int		ft_long_format(t_ls *ls)
 	i = 0;
 	while (i < ls->size)	
 	{
-		if (stat(ls->file[i]->name, &st) == -1)
-			perror("ft_ls ");
+		if (stat(ls->file[i]->pathname, &st) == -1)
+		{
+			perror("perror ft_long_format -> ft_ls ");
+		}
 		else
 		{
 			ls->file[i]->mode = st.st_mode;
@@ -61,16 +63,12 @@ int		ft_long_format(t_ls *ls)
 			ls->file[i]->mtime = st.st_mtime;
 			// ft_show_data(ls->file[i]);
 		}
+		// free(name);
 		i++;
 	}
 	ft_affich(ls);
 	return (0);
 }
-
-// void	ft_free_ls(t_ls *ls)
-// {
-
-// }
 
 int		ft_read_dir(t_ls *ls, char *path, int size)
 {
@@ -81,7 +79,7 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 		ft_exit(2, 0);
 	ls->current_path = path;
 	if ((rep = opendir(ls->current_path)) == NULL)
-		perror("ft_ls ");
+		perror("perror ft_read_dir -> ft_ls ");
 	else
 	{
 		while ((dir = readdir(rep)) != NULL)
@@ -89,14 +87,14 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 			if (dir->d_name[0] != '.' || ls->flag & AMIN)
 			{
 				if (!(ls->file[ls->size] = (t_lf*)malloc(sizeof(t_lf)))
-					|| !(ls->file[ls->size++]->name = ft_strdup(dir->d_name)))
+					|| !(ls->file[ls->size]->name = ft_strdup(dir->d_name)))
 					ft_exit(2, 0);
+				ls->file[ls->size++]->pathname = ft_create_path(ls->current_path, dir->d_name);
 			}
 		}
 		closedir(rep);
 	}
 	ft_long_format(ls);
-	free(ls->file);// a developpper
 	return (0);
 }
 
@@ -110,12 +108,18 @@ int		main(int argc, char **argv)
 	while (*ls.to_read)
 	{
 		if (stat(*ls.to_read, &st) == -1)
-			perror("ft_ls ");
+			perror("perror main -> ft_ls ");
 		else if (st.st_mode & S_IFDIR)
 			ft_read_dir(&ls, *ls.to_read, st.st_nlink);
 		else
-			printf("%s\n", *ls.to_read); // have to switch for affich function
-		// printf("-----\nls.link = %d, ls.size = %lld\n",st.st_nlink, st.st_size);
+		{
+			if (!(ls.file = (t_lf**)ft_memalloc(sizeof(t_lf*) * 2))
+				|| !(ls.file[ls.size] = (t_lf*)malloc(sizeof(t_lf)))
+				|| !(ls.file[ls.size]->name = ft_strdup(*ls.to_read)))
+				ft_exit(2, 0);
+			ls.file[ls.size++]->pathname = ft_create_path(ls.current_path, *ls.to_read);
+			ft_long_format(&ls);
+		}
 		ls.to_read++;
 	}
 	return (0);
