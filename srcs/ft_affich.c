@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/25 13:27:59 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:29:32 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_get_size(size_t size, int h_min)
 			if (!(ret = (char*)ft_memalloc(5)))
 				ft_exit(2, 0);
 			ret[0] = (size / 10) + '0';
-			ret[1] = '.'
+			ret[1] = '.';
 			ret[2] = (size % 10) + '0';
 			ret[3] = letters[i];
 		}
@@ -72,6 +72,31 @@ void	ft_free_ls(t_ls *ls)
 	ls->file = NULL;
 	ls->size = 0;
 	// printf("end free\n");
+}
+
+void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
+{
+	size_t	i;
+	size_t	best;
+	size_t	pos;
+	t_lf			*tmp;
+
+	pos = 0;
+	while (pos < ls->size - 1)
+	{
+		best = pos;
+		i = pos + 1;
+		while (i < ls->size)
+		{
+			if ((!(ls->flag & RMIN)) == !(cmp(ls->file[best], ls->file[i])))
+				best = i;
+			i++;
+		}
+		tmp = ls->file[best];
+		ls->file[best] = ls->file[pos];
+		ls->file[pos] = tmp;
+		pos++;
+	}
 }
 
 void	ft_bubble_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
