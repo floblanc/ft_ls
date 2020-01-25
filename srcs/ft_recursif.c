@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_recursif.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/24 16:43:07 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 14:20:05 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,26 @@
 char	*ft_create_path(char *path, char *file)
 {
 	char	*new;
-	size_t	size;
+	size_t	size_a;
+	size_t	size_b;
+	size_t	i;
+	size_t	j;
 
-	size = ft_strlen(path) + ft_strlen(file) + 2;
-	if (!(new = (char*)ft_memalloc(sizeof(char) * size)))
+	i = 0;
+	size_a = ft_strlen(path);
+	size_b = ft_strlen(file);
+	if (!(new = (char*)malloc(sizeof(char) * (size_a + size_b))))
 		ft_exit(2, 0);
-	new = ft_strcat(new, path);
-	new = ft_strcat(new, "/");
-	new = ft_strcat(new, file);
+	while (j < size_a)
+		new[i++] = path[j++];
+	new[i++] = '/';
+	j = 0;
+	while (j < size_b)
+		new[i++] = file[j++];
+	new[i] = '\0';
+	// new = ft_strcat(new, path);
+	// new = ft_strcat(new, "/");
+	// new = ft_strcat(new, file);
 	return (new);
 }
 
@@ -37,20 +49,21 @@ void	ft_recursif(t_ls *ls)
 	i = 0;
 	while (i < ls->size)
 	{
-		ft_bzero(&new_ls, sizeof(t_ls));
-		new_ls.flag = ls->flag;
-		path = ft_create_path(ls->current_path, ls->file[i]->name);
-		if (lstat(path, &st) == -1)
+		// if (lstat(path, &st) == -1)
+		// {
+		// 	printf("--- %s ---\n", ls->file[i]->name);
+		// 	perror("perror ft_recursif -> ft_ls ");
+		// }
+		// else if (st.st_mode & S_IFDIR)
+		if (ls->file[i]->mode & S_IFDIR)
 		{
-			printf("--- %s ---\n", ls->file[i]->name);
-			perror("perror ft_recursif -> ft_ls ");
-		}
-		else if (st.st_mode & S_IFDIR)
-		{
+			ft_bzero(&new_ls, sizeof(t_ls));
+			new_ls.flag = ls->flag;
+			path = ft_create_path(ls->current_path, ls->file[i]->name);
 			ft_printf("\n%s:\n", path);
 			ft_read_dir(&new_ls, path, st.st_nlink);
+			free(path);
 		}
-		free(path);
 		i++;
 	}
 }
