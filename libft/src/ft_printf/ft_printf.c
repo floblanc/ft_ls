@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 17:03:22 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/18 16:58:01 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:21:55 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,8 @@ static int		type(char c, t_val *a)
 	return (0);
 }
 
-static int		ft_flag(t_val *a, char *str, int i)
+static int		ft_flag(t_val *a, char *str, int i, va_list ap)
 {
-	i++;
-	if ((str[i] >= '0' && str[i] <= '9'))
-		i = nb(str, i, a, 1);
-	if (str[i] == '.')
-		i = nb(str, i, a, 2);
 	while (str[i] == '+' || str[i] == '-' || str[i] == '#' || str[i] == ' ' ||
 		str[i] == '0')
 	{
@@ -62,10 +57,14 @@ static int		ft_flag(t_val *a, char *str, int i)
 			a->space = 1;
 		i++;
 	}
-	if ((str[i] >= '0' && str[i] <= '9'))
-		i = nb(str, i, a, 1);
+	if (str[i] == '*')
+		a->ldc = va_arg(ap, int);
+	if ((str[i] >= '0' && str[i] <= '9') || str[i] == '*')
+		i = nb(str, i, a, (str[i] == '*' ? 3 : 1));
+	if (str[i] == '.' && str[i + 1] == '*')
+		a->prec = va_arg(ap, int);
 	if (str[i] == '.')
-		i = nb(str, i, a, 2);
+		i = nb(str, i + 1, a, (str[i + 1] == '*' ? 4 : 2));
 	return (i);
 }
 
@@ -92,7 +91,7 @@ static int		ft_type_nb(t_val *a, char *str, int i)
 
 static int		ft_tri_flag(t_val *a, va_list ap, char *str, int i)
 {
-	i = ft_flag(a, str, i);
+	i = ft_flag(a, str, i + 1, ap);
 	i = ft_type_nb(a, str, i);
 	if (a->ldchamp == 1 && a->moins == 1)
 		a->ldc = -a->ldc;

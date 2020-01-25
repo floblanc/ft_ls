@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/24 16:14:56 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:24:16 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ void	ft_show_data(t_lf *lf)
 int		ft_long_format(t_ls *ls)
 {
 	struct stat st;
-	int 		i;
+	size_t		i;
 
 	i = 0;
 	while (i < ls->size)	
 	{
-		if (stat(ls->file[i]->pathname, &st) == -1)
+		if (lstat(ls->file[i]->pathname, &st) == -1)
 		{
+			printf("--- %s ---\n", ls->file[i]->name);
 			perror("perror ft_long_format -> ft_ls ");
 		}
 		else
@@ -63,7 +64,6 @@ int		ft_long_format(t_ls *ls)
 			ls->file[i]->mtime = st.st_mtime;
 			// ft_show_data(ls->file[i]);
 		}
-		// free(name);
 		i++;
 	}
 	ft_affich(ls);
@@ -86,14 +86,16 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 		{
 			if (dir->d_name[0] != '.' || ls->flag & AMIN)
 			{
-				if (!(ls->file[ls->size] = (t_lf*)malloc(sizeof(t_lf)))
+				if (!(ls->file[ls->size] = (t_lf*)ft_memalloc(sizeof(t_lf)))
 					|| !(ls->file[ls->size]->name = ft_strdup(dir->d_name)))
 					ft_exit(2, 0);
-				ls->file[ls->size++]->pathname = ft_create_path(ls->current_path, dir->d_name);
+				ls->file[ls->size]->pathname = ft_create_path(ls->current_path, dir->d_name);
+				ls->size++;
 			}
 		}
 		closedir(rep);
 	}
+	
 	ft_long_format(ls);
 	return (0);
 }
@@ -107,7 +109,7 @@ int		main(int argc, char **argv)
 	ft_get_flag(&ls, argc, argv);
 	while (*ls.to_read)
 	{
-		if (stat(*ls.to_read, &st) == -1)
+		if (lstat(*ls.to_read, &st) == -1)
 			perror("perror main -> ft_ls ");
 		else if (st.st_mode & S_IFDIR)
 			ft_read_dir(&ls, *ls.to_read, st.st_nlink);
@@ -117,10 +119,21 @@ int		main(int argc, char **argv)
 				|| !(ls.file[ls.size] = (t_lf*)malloc(sizeof(t_lf)))
 				|| !(ls.file[ls.size]->name = ft_strdup(*ls.to_read)))
 				ft_exit(2, 0);
+			ls.current_path = ft_strdup(".");
 			ls.file[ls.size++]->pathname = ft_create_path(ls.current_path, *ls.to_read);
 			ft_long_format(&ls);
 		}
+		free(*ls.to_read);
 		ls.to_read++;
 	}
 	return (0);
 }
+
+
+// /Users/AntoinePouchet/Library/Application\ Support/Skype/astas13/media_messaging/emo_cache_v2
+
+
+
+
+
+

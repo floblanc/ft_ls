@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_affich.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/24 17:48:42 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:27:59 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,27 @@ char	*ft_get_size(size_t size, int h_min)
 	return (ret);
 void	ft_free_ls(t_ls *ls)
 {
-	int i;
+	size_t i;
 
 	i = 0;
-	while (ls->file[i])
+	while (i < ls->size)
 	{
-		free(ls->file[i]->name);
-		free(ls->file[i]->pathname);
+		// printf("\ni = %zu\n", i);
+		// printf("1 -- %s\n", ls->file[i]->name);
+		ft_strdel(&ls->file[i]->name);
+		// printf("2 -- %s\n", ls->file[i]->pathname);
+		ft_strdel(&ls->file[i]->pathname);
+		// printf("3\n");
+		// ft_bzero(ls->file[i], sizeof(t_lf));
 		free(ls->file[i]);
+		ls->file[i] = NULL;
+		// printf("4\n");
 		i++;
 	}
+	free(ls->file);
+	ls->file = NULL;
+	ls->size = 0;
+	// printf("end free\n");
 }
 
 void	ft_bubble_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
@@ -101,4 +112,5 @@ void	ft_affich(t_ls *ls)
 	if (ls->flag & RMAJ)
 		ft_recursif(ls);
 	ft_free_ls(ls);
+
 }

@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:51:40 by apouchet          #+#    #+#             */
-/*   Updated: 2017/03/30 16:51:41 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:21:23 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int						nb(char *str, int i, t_val *a, int mode)
 	int		j;
 
 	j = 0;
-	if (str[i] == '.')
+	if (str[i] == '.' || str[i] == '*')
 		i++;
 	while (str[i] == '-' || str[i] == '+')
 		val[j++] = str[i++];
@@ -27,17 +27,16 @@ int						nb(char *str, int i, t_val *a, int mode)
 	while (str[i] >= '0' && str[i] <= '9')
 		val[j++] = str[i++];
 	val[j] = '\0';
-	if (mode == 1)
+	if (mode == 1 || mode == 3)
 		a->ldchamp = 1;
 	if (mode == 1)
 		a->ldc = ft_atoi(val);
-	if (mode == 2)
-	{
+	if (mode == 2 || mode == 4)
 		a->precision = 1;
+	if (mode == 2)
 		a->prec = ft_atoi(val);
-		if (a->prec < 0)
-			a->prec = 0;
-	}
+	if (a->prec < 0)
+		a->prec = 0;
 	return (i);
 }
 
