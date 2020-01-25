@@ -6,49 +6,51 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/25 13:29:32 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:39:55 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-char	*ft_get_size(size_t size, int h_min)
-{
-	int		i;
-	char	letters[] = "BKMGTPEZY"
-	double	tmp;
-	char	*ret;
+// char	*ft_get_size(size_t size, int h_min)
+// {
+// 	int		i;
+// 	char	letters[] = "BKMGTPEZY";
+// 	double	tmp;
+// 	char	*ret;
 	
-	if (h_min)
-	{
-		i = 0;
-		tmp = (double)size;
-		while(tmp / 1024 >= 1)
-		{
-			tmp /= 1024;
-			i++;
-		}
-		size = (unsigned int)tmp;
-		if (tmp >= 10)
-		{
-			if (!(ret = itoa((int)size)))
-				ft_exit(2, 0);
-			ret[ft_strlen(ret) - 2] = letters[i];
-		}
-		else
-		{
-			if (!(ret = (char*)ft_memalloc(5)))
-				ft_exit(2, 0);
-			ret[0] = (size / 10) + '0';
-			ret[1] = '.';
-			ret[2] = (size % 10) + '0';
-			ret[3] = letters[i];
-		}
-		return (ret);
-	}
-	if (!(ret = ulltoa(size)))
-		ft_exit(2, 0);
-	return (ret);
+// 	if (h_min)
+// 	{
+// 		i = 0;
+// 		tmp = (double)size;
+// 		while(tmp / 1024 >= 1)
+// 		{
+// 			tmp /= 1024;
+// 			i++;
+// 		}
+// 		size = (unsigned int)tmp;
+// 		if (tmp >= 10)
+// 		{
+// 			if (!(ret = itoa((int)size)))
+// 				ft_exit(2, 0);
+// 			ret[ft_strlen(ret) - 2] = letters[i];
+// 		}
+// 		else
+// 		{
+// 			if (!(ret = (char*)ft_memalloc(5)))
+// 				ft_exit(2, 0);
+// 			ret[0] = (size / 10) + '0';
+// 			ret[1] = '.';
+// 			ret[2] = (size % 10) + '0';
+// 			ret[3] = letters[i];
+// 		}
+// 		return (ret);
+// 	}
+// 	if (!(ret = ulltoa(size)))
+// 		ft_exit(2, 0);
+// 	return (ret);
+// }
+
 void	ft_free_ls(t_ls *ls)
 {
 	size_t i;
@@ -82,12 +84,16 @@ void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 	t_lf			*tmp;
 
 	pos = 0;
+	if (!ls->size)
+		return ;
 	while (pos < ls->size - 1)
 	{
 		best = pos;
 		i = pos + 1;
+		// printf("pos = %zu, ls->size %zu\n", pos, ls->size);
 		while (i < ls->size)
 		{
+			// printf("i = %zu\n", i);
 			if ((!(ls->flag & RMIN)) == !(cmp(ls->file[best], ls->file[i])))
 				best = i;
 			i++;
@@ -125,11 +131,11 @@ void	ft_affich(t_ls *ls)
 
 	i = 0;
 	if (ls->flag & SMAJ)
-		ft_bubble_sort(ls, &ft_less_s_maj_cmp);
+		ft_select_sort(ls, &ft_less_s_maj_cmp);
 	else if (ls->flag & TMIN)
-		ft_bubble_sort(ls, &ft_less_t_cmp);
+		ft_select_sort(ls, &ft_less_t_cmp);
 	else
-		ft_bubble_sort(ls, &ft_ascii_cmp);
+		ft_select_sort(ls, &ft_ascii_cmp);
 	while (i < ls->size)
 	{
 		ft_printf("%s\n", ls->file[i++]->name);
