@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/25 14:15:08 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 15:00:23 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 		}
 		closedir(rep);
 	}
-	
 	ft_long_format(ls);
 	return (0);
 }
