@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/24 17:39:35 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:24:16 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,15 @@ int		ft_long_format(t_ls *ls)
 	size_t		i;
 
 	i = 0;
-	dprintf(2, "\nstart ft_long_format\n");
-	dprintf(2, "i = %zu - ls->size = %zu\n\n", i, ls->size);
 	while (i < ls->size)	
 	{
-		dprintf(2, "i : %zu\n", i);
-		dprintf(2, "name : %s\n", ls->file[i]->name);
-		dprintf(2, "path : %s\n", ls->file[i]->pathname);
 		if (lstat(ls->file[i]->pathname, &st) == -1)
 		{
-			dprintf(2, "a\n");
 			printf("--- %s ---\n", ls->file[i]->name);
 			perror("perror ft_long_format -> ft_ls ");
 		}
 		else
 		{
-			dprintf(2, "b\n");
 			ls->file[i]->mode = st.st_mode;
 			ls->file[i]->nb_link = st.st_nlink;
 			ls->file[i]->uid = st.st_uid;
@@ -91,32 +84,15 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 	{
 		while ((dir = readdir(rep)) != NULL)
 		{
-			// dprintf(2, "1\n");
 			if (dir->d_name[0] != '.' || ls->flag & AMIN)
 			{
-				// dprintf(2, "2\n");
 				if (!(ls->file[ls->size] = (t_lf*)ft_memalloc(sizeof(t_lf)))
 					|| !(ls->file[ls->size]->name = ft_strdup(dir->d_name)))
 					ft_exit(2, 0);
-				// dprintf(2, "3\n");
 				ls->file[ls->size]->pathname = ft_create_path(ls->current_path, dir->d_name);
 				ls->size++;
-				dprintf(2, "4\n");
-				dprintf(2, "name : %s\n", ls->file[ls->size - 1]->name);
-				dprintf(2, "path : %s\n", ls->file[ls->size - 1]->pathname);
-				dprintf(2, "size : %zu\n", ls->size - 1);
-				dprintf(2, "\n");
-				int i = 0;
-				while (i < ls->size)
-				{
-					dprintf(2, "i = %d\n", i);
-					dprintf(2, "name : %s\n", ls->file[i]->name);
-					dprintf(2, "path : %s\n", ls->file[i]->pathname);
-					i++;
-				}
 			}
 		}
-		printf("end while\n");
 		closedir(rep);
 	}
 	
@@ -133,7 +109,6 @@ int		main(int argc, char **argv)
 	ft_get_flag(&ls, argc, argv);
 	while (*ls.to_read)
 	{
-		printf("new file : %s\n", *ls.to_read);
 		if (lstat(*ls.to_read, &st) == -1)
 			perror("perror main -> ft_ls ");
 		else if (st.st_mode & S_IFDIR)
@@ -148,8 +123,17 @@ int		main(int argc, char **argv)
 			ls.file[ls.size++]->pathname = ft_create_path(ls.current_path, *ls.to_read);
 			ft_long_format(&ls);
 		}
-		printf("--- tour ---\n");
+		free(*ls.to_read);
 		ls.to_read++;
 	}
 	return (0);
 }
+
+
+// /Users/AntoinePouchet/Library/Application\ Support/Skype/astas13/media_messaging/emo_cache_v2
+
+
+
+
+
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_affich.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/24 17:35:08 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:24:27 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	ft_free_ls(t_ls *ls)
 	}
 	free(ls->file);
 	ls->file = NULL;
+	ls->size = 0;
 	// printf("end free\n");
 }
 
@@ -73,8 +74,6 @@ void	ft_affich(t_ls *ls)
 	}
 	if (ls->flag & RMAJ)
 		ft_recursif(ls);
-	printf("--- end ft_affich ---\n");
 	ft_free_ls(ls);
-	printf("--- free ok ---\n");
 
 }
