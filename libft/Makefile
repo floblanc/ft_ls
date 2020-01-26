@@ -6,7 +6,7 @@
 #    By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/21 15:42:31 by apouchet          #+#    #+#              #
-#    Updated: 2019/11/18 17:08:13 by apouchet         ###   ########.fr        #
+#    Updated: 2020/01/26 11:38:04 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC_ELSE = ./src/else/ft_atof.c ./src/else/ft_atoi.c ./src/else/ft_atol.c \
 ./src/else/ft_nbrlen_base_unsigned.c ./src/else/ft_nbrlen_unsigned.c \
 ./src/else/ft_pow.c ./src/else/ft_tolower.c ./src/else/ft_toupper.c \
 ./src/else/ft_unicode.c ./src/else/ft_unicode_len.c ./src/else/ft_while_char.c \
-./src/else/ft_while_not_char.c ./src/else/ft_while_space.c
+./src/else/ft_while_not_char.c ./src/else/ft_while_space.c \
+./src/else/ft_ulltoa.c
 
 SRC_IS = ./src/is/ft_isalnum.c ./src/is/ft_isalpha.c ./src/is/ft_isascii.c \
 ./src/is/ft_ischar.c ./src/is/ft_isdigit.c ./src/is/ft_islower.c \

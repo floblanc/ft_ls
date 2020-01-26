@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   else.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 17:56:10 by apouchet          #+#    #+#             */
-/*   Updated: 2019/02/19 20:23:28 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/26 11:35:53 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,8 @@ double	ft_pow(double x, double y);
 float	ft_atof(char *s);
 
 size_t	ft_atost(const char *s);
+
+char	*ft_ulltoa(unsigned long long int n);
+
 
 #endif

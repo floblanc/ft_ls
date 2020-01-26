@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_recursif.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/25 15:12:22 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/26 11:44:05 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ void	ft_recursif(t_ls *ls)
 	struct	stat st;
 
 	i = 0;
-	while (i < ls->size)
+	while (i < ls->nb_elem)
 	{
-		if (ls->file[i]->mode & S_IFDIR)
+		if (ls->file[i]->st.st_mode & S_IFDIR)
 		{
 			path = ft_create_path(ls->current_path, ls->file[i]->name);
 			ft_bzero(&new_ls, sizeof(t_ls));
 			new_ls.flag = ls->flag;
 			ft_printf("\n%s:\n", path);
-			ft_read_dir(&new_ls, path, ls->file[i]->nb_link);
+			ft_read_dir(&new_ls, path, ls->file[i]->st.st_nlink);
 			free(path);
 		}
 		i++;

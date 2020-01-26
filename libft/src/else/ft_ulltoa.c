@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbrlen_unsigned.c                               :+:      :+:    :+:   */
+/*   ft_ulltoa.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 14:09:49 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/26 14:13:47 by apouchet         ###   ########.fr       */
+/*   Created: 2018/11/14 11:37:56 by apouchet          #+#    #+#             */
+/*   Updated: 2020/01/26 11:39:05 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "else.h"
 
-size_t	ft_nbrlen_unsigned(size_t nb)
+char	*ft_ulltoa(unsigned long long int n)
 {
-	size_t	len;
+	size_t	i;
+	char	*str;
 
-	len = 0;
-	while (nb >= 10)
+	i = ft_nbrlen_unsigned(n);
+	if (!(str = (char*)malloc(sizeof(char) * (i + 1))))
+		return (0);
+	str[i] = '\0';
+	i--;
+	while (i > 0)
 	{
-		nb = nb / 10;
-		len++;
+		str[i] = (n % 10) + '0';
+		n /= 10;
+		i--;
 	}
-	return (len + 1);
+	str[i] = (n % 10) + '0';
+	return (str);
 }

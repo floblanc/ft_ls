@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/25 13:27:49 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/26 14:12:35 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,35 @@
 # define DMIN 32
 # define HMIN 64
 # define LMIN 128
-# define PMIN 256
-# define RMIN 512
-# define SMIN 1028
-# define TMIN 2048
-# define FLAGS "AFRSadhlprst"
+# define NMIN 256
+# define OMIN 512
+# define PMIN 1028
+# define RMIN 2048
+# define SMIN 4096
+# define TMIN 8192
+# define FLAGS "AFRSadhlnoprst"
 
+// to do F / l / p / s
+// other flags ez : o / n
 typedef struct		s_lf
 {
 	char			*pathname;
 	char			*name;
 	unsigned char	type;
-	mode_t			mode;		/* protection */
-	nlink_t			nb_link;	/* number of hard links */
-	uid_t			uid;		/* user ID of owner */
-	gid_t			gid;		/* group ID of owner */
-	off_t			file_size;		/* total size, in bytes */
-	time_t			mtime;		/* time of last modification */
 
+	// mode_t			mode;		/* protection */
+	// nlink_t			nb_link;	/* number of hard links */
+	// uid_t			uid;		 user ID of owner 
+	// gid_t			gid;		/* group ID of owner */
+	// off_t			file_size;	/* total size, in bytes */
+	// time_t			mtime;		/* time of last modification */
+
+	char			*link;
 	char			*user;
 	char			*groupe;
+	char			*size;
+	struct stat 	st;
+
 	
 	// dev_t			st_dev;     /* ID of device containing file */
 	// ino_t			st_ino;		/* inode number */
@@ -98,7 +107,16 @@ typedef struct		s_ls
 {
 	int				flag;
 	char			**to_read;
-	size_t			size;
+
+	size_t			nb_elem;
+
+	size_t			size_block;
+	size_t			size_link;
+	size_t			size_name;
+	size_t			size_groupe;
+	size_t			size_size;
+	size_t			total_block;
+
 	char			*current_path;
 	t_lf			**file;
 }					t_ls;
@@ -121,6 +139,7 @@ char	*ft_create_path(char *path, char *file);
 
 void	ft_recursif(t_ls *ls);
 
+int		ft_long_format(t_ls *ls);
 
 #endif
 

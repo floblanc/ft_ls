@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/23 17:28:20 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/26 13:54:07 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ static int		flag_stocker(char letter, int *flag)
 		if (FLAGS[i] == letter)
 		{
 			*flag = *flag | (int)ft_pow(2, i);
+			if (FLAGS[i] == 'p')
+				*flag &= (0xFFFF - FMAJ);
+			else if (FLAGS[i] == 'F')
+				*flag &= (0xFFFF - PMIN);
 			return (1);
 		}
 		i++;
@@ -75,5 +79,7 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 			size++;
 		i++;
 	}
+	if (ls->flag & OMIN || ls->flag & NMIN)
+		ls->flag |= LMIN;
 	ft_get_to_read(ls, size, argc, argv);
 }
