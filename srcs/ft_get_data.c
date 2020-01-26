@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/26 15:26:05 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/26 18:29:18 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int		ft_long_format(t_ls *ls)
 	size_t		i;
 
 	i = 0;
-	if (ls->flag & LMIN || ls->flag & SMIN || ls->flag & SMAJ || ls->flag & TMIN)
+	if (ls->flag & LMIN || ls->flag & SMIN || ls->flag & SMAJ || ls->flag & TMIN
+		|| ls->flag & FMAJ || ls->flag & PMIN || ls->flag & RMAJ)
 	{
 		while (i < ls->nb_elem)	
 		{

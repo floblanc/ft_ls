@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/26 14:12:35 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/26 18:29:11 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@
 # define LMIN 128
 # define NMIN 256
 # define OMIN 512
-# define PMIN 1028
+# define PMIN 1024
 # define RMIN 2048
 # define SMIN 4096
 # define TMIN 8192
 # define FLAGS "AFRSadhlnoprst"
+
+// LMIN SMIN SMAJ TMIN FMAJ PMIN RMAJ
 
 // to do F / l / p / s
 // other flags ez : o / n

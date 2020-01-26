@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/26 17:25:58 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/26 18:34:12 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ void	ft_str_date(char date[13])
 
 // S_IFMT	0170000	masque du type de fichier
 // S_IFSOCK	0140000	socket
-
-
 // S_IFLNK	0120000	lien symbolique
 // S_IFREG	0100000	fichier ordinaire
 // S_IFBLK	0060000	périphérique blocs
@@ -120,7 +118,9 @@ void	ft_str_mode(char src[12], mode_t mode)
 
 	// printf("\n%#o\n", mode);
 
-	if ((mode & S_IFMT) == S_IFLNK)
+	if ((mode & S_IFMT) == S_IFSOCK)
+		src[0] = 's';
+	else if ((mode & S_IFMT) == S_IFLNK)
 		src[0] = 'l';
 	else if ((mode & S_IFMT) == S_IFREG)
 		src[0] = '-';
@@ -150,31 +150,66 @@ void	ft_str_mode(char src[12], mode_t mode)
 	// src[11] = '\0';
 }
 
-// char	ft_flag_p_f(t_mode mode, size_t flag)
-// {
-	// if ((mode & S_IFMT) == S_IFLNK)
-	// 	src[0] = 'l';
-	// else if ((mode & S_IFMT) == S_IFREG)
-	// 	src[0] = '-';
-	// else if ((mode & S_IFMT) == S_IFBLK)
-	// 	src[0] = 'b';
-	// else if ((mode & S_IFMT) == S_IFDIR)
-	// 	src[0] = 'd';
-	// else if ((mode & S_IFMT) == S_IFCHR)
-	// 	src[0] = 'c';
-	// else if ((mode & S_IFMT) == S_IFIFO)
-	// 	src[0] = 'p';
-// }
+void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
+{
+	type[0] = '\0';
+	if ((flag & PMIN || flag & FMAJ) && (mode & S_IFMT) == S_IFDIR)
+		type[0] = '/';
+	else if (flag & FMAJ)
+	{
+		if ((mode & S_IFMT) == S_IFSOCK)
+			type[0] = '=';
+		else if ((mode & S_IFMT) == S_IFLNK)
+			type[0] = '@';
+		// else if ((mode & S_IFMT) == S_IFDIR)
+		// 	type[0] = '/';
+		// else if ((mode & S_IFMT) == S_IFBLK)
+		// 	type[0] = '\0';
+		// else if ((mode & S_IFMT) == S_IFCHR)
+		// 	type[0] = '\0';
+		else if ((mode & S_IFMT) == S_IFIFO)
+			type[0] = '|';
+		else if (mode & S_IXUSR)
+			type[0] = '*';
+
+		//// % whiteout ?????????????????????
+	}
+	type[1] = '\0';
+}
+
+void	ft_print_data(t_ls *ls, size_t i)
+{
+	char	mode[12];
+	char	type[2];
+	char	link[256];
+	size_t	len;
+
+	len = 0;
+	if (ls->flag & LMIN)
+	{
+		ft_str_mode(mode, ls->file[i]->st.st_mode);
+		ft_printf("%s%c %*d %*s%*.*s  %*d %s ", mode, ' '
+			, ls->size_link, ls->file[i]->st.st_nlink, 8, "apouchet"
+			, (10 + 2) * ((ls->flag & OMIN) == 0), 10 * ((ls->flag & OMIN) == 0)
+			, "2016_paris", ls->size_size, ls->file[i]->st.st_size, "date");
+		if (ls->flag & LMIN && (ls->file[i]->st.st_mode & S_IFMT) == S_IFLNK)
+		{
+			if ((len = readlink(ls->file[i]->pathname, link, 256)) < 0)
+				ft_exit(3, 0);
+		}
+	}
+	ft_flag_p_f(ls->file[i]->st.st_mode, ls->flag, type);
+	link[len] = '\0';
+	ft_printf("%s%.*s%.*s%.*s\n", ls->file[i]->name, type[0] != 0, type, 4 * (len > 0), " -> ", len, link);
+}
 
 void	ft_affich(t_ls *ls)
 {
-	int i;
-	char	mode[12];
+	size_t	i;
 	char	*user;
 	char	*grp;
 	char	date[13];
-	char	link[256];
-	size_t	len;
+	
 
 	i = 0;
 	if (ls->flag & SMAJ)
@@ -187,25 +222,9 @@ void	ft_affich(t_ls *ls)
 		ft_printf("total %zu\n", ls->total_block);
 	while (i < ls->nb_elem)
 	{
-		len = 0;
-		// if (ls->flag & SMIN)
-		// 	ft_printf("%*zu ", ls->size_block, ls->file[i]->st.st_blocks);
-		// if (ls->flag & LMIN)
-		// {
-		// 	ft_str_mode(mode, ls->file[i]->st.st_mode);
-		// 	ft_printf("%s%c %*d %*s%*.*s  %*d %s ", mode, ' '
-		// 		, ls->size_link, ls->file[i]->st.st_nlink, 8, "apouchet"
-		// 		, (10 + 2) * ((ls->flag & OMIN) == 0), 10 * ((ls->flag & OMIN) == 0)
-		// 		, "2016_paris", ls->size_size, ls->file[i]->st.st_size, "date");
-		// 	// printf("%s\n", );
-		// }
-		if (ls->flag & LMIN && (ls->file[i]->st.st_mode & S_IFMT) == S_IFLNK)
-		{
-			if ((len = readlink(ls->file[i]->pathname, link, 256)) < 0)
-				ft_exit(3, 0);
-		}
-		link[len] = '\0';
-		printf("%s%s%.*s%.*s\n", ls->file[i]->name, 'a',4 * (len > 0), " -> ", len, link);
+		if (ls->flag & SMIN)
+			ft_printf("%*zu ", ls->size_block, ls->file[i]->st.st_blocks);
+		ft_print_data(ls, i);
 		i++;
 	}
 	if (!(ls->flag & DMIN) && ls->flag & RMAJ)
