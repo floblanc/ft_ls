@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 18:07:21 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:19:25 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ static char	*ft_get_date(time_t date)
 	char	*ret = NULL;
 	char	*tmp = NULL;
 
-	printf("start get date\n");
+	// printf("start get date\n");
 	diff = difftime(date, time(&now));
-	printf("diff ?\n");
+	// printf("diff ?\n");
 	printf("date = %ld\n", date);
 	tmp = ctime(&date);
 	printf("ctime ok\n");
-	printf("tmp = %s\n", tmp);
+	// printf("tmp = %s\n", tmp);
 	if (!(ret = ft_strdup(&tmp[4])))
 		ft_exit(2, 0);
-	printf("strdup ok\n");
+	// printf("strdup ok\n");
 	if (!(diff <= 0 && diff > -15552000))
 		ft_strcpy(&(ret[7]), &(ret[15]));
-	printf("strcpy ok\n");
+	// printf("strcpy ok\n");
 	ret[12] = 0;
 	return (ret);
 }
@@ -150,7 +150,7 @@ static char	*ft_device_minor_size(t_ls *ls, t_lf *file, char *tmp, char *nb)
 	}
 	tmp = ft_strcat(tmp, nb);
 	free(nb);
-	printf("tmp = %s\n", tmp);
+	// printf("tmp = %s\n", tmp);
 	return (tmp);
 }
 
@@ -167,8 +167,8 @@ static void	ft_device_size(t_ls *ls)
 		if ((ls->file[i]->st.st_mode & S_IFMT) == S_IFCHR
 			|| (ls->file[i]->st.st_mode & S_IFMT) == S_IFBLK)
 		{
-			printf("value : major = %zu - minor = %zu\n", ls->file[i]->major, ls->file[i]->minor);
-			printf("max size : major = %zu - minor = %zu\n", ls->size_major, ls->size_minor);
+			// printf("value : major = %zu - minor = %zu\n", ls->file[i]->major, ls->file[i]->minor);
+			// printf("max size : major = %zu - minor = %zu\n", ls->size_major, ls->size_minor);
 			if (!(tmp = (char*)malloc(ls->size_major + ls->size_minor + 13))
 				|| !(nb = ft_itoa_unsigned(ls->file[i]->major)))
 				ft_exit(2, 0);
@@ -202,7 +202,7 @@ int		ft_long_format(t_ls *ls)
 				ls->file[i]->date = ft_get_date(ls->file[i]->st.st_mtime);
 				ls->file[i]->size = ft_get_size((size_t)ls->file[i]->st.st_size, ls->flag);
 				ft_get_user_grp(ls, ls->file[i]);
-				printf("get user/grp and size ok\n");
+				// printf("get user/grp and size ok\n");
 			}
 			i++;
 		}
