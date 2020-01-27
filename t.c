@@ -2,6 +2,6 @@
 
 int main()
 {
-	printf("-|%*.*s|-\n", 0, 0, "hello world");
+	printf("-|%*s|-\n", strlen("hello world") + 2, "hello world");
 	return (0);
 }

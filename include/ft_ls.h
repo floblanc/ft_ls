@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/26 18:29:11 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:51:21 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@
 
 // LMIN SMIN SMAJ TMIN FMAJ PMIN RMAJ
 
-// to do F / l / p / s
-// other flags ez : o / n
+// to do F / l
 typedef struct		s_lf
 {
 	char			*pathname;
@@ -61,9 +60,10 @@ typedef struct		s_lf
 	// off_t			file_size;	/* total size, in bytes */
 	// time_t			mtime;		/* time of last modification */
 
-	char			*link;
+	// char			*link;
+	char			*date;
 	char			*user;
-	char			*groupe;
+	char			*grp;
 	char			*size;
 	struct stat 	st;
 
@@ -111,11 +111,10 @@ typedef struct		s_ls
 	char			**to_read;
 
 	size_t			nb_elem;
-
 	size_t			size_block;
 	size_t			size_link;
-	size_t			size_name;
-	size_t			size_groupe;
+	size_t			size_user;
+	size_t			size_grp;
 	size_t			size_size;
 	size_t			total_block;
 

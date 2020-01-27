@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/26 18:29:27 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 11:49:05 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_recursif(t_ls *ls)
 		// printf(". = %d, .. = %d, DIR = %d\n", ft_strcmp(ls->file[i]->name, "."), ft_strcmp(ls->file[i]->name, ".."), ls->file[i]->st.st_mode & S_IFDIR);
 		if (ft_strcmp(ls->file[i]->name, ".") && ft_strcmp(ls->file[i]->name, "..") && ls->file[i]->st.st_mode & S_IFDIR)
 		{
-			printf("ok\n");
 			path = ft_create_path(ls->current_path, ls->file[i]->name);
 			ft_bzero(&new_ls, sizeof(t_ls));
 			new_ls.flag = ls->flag;

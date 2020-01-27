@@ -6,11 +6,12 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/26 18:34:12 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:50:53 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
+#include <sys/acl.h>
 
 void	ft_free_ls(t_ls *ls)
 {
@@ -19,22 +20,18 @@ void	ft_free_ls(t_ls *ls)
 	i = 0;
 	while (i < ls->nb_elem)
 	{
-		// printf("\ni = %zu\n", i);
-		// printf("1 -- %s\n", ls->file[i]->name);
 		ft_strdel(&ls->file[i]->name);
-		// printf("2 -- %s\n", ls->file[i]->pathname);
 		ft_strdel(&ls->file[i]->pathname);
-		// printf("3\n");
-		// ft_bzero(ls->file[i], sizeof(t_lf));
+		ft_strdel(&ls->file[i]->user);
+		ft_strdel(&ls->file[i]->grp);
+		ft_strdel(&ls->file[i]->size);
 		free(ls->file[i]);
 		ls->file[i] = NULL;
-		// printf("4\n");
 		i++;
 	}
 	free(ls->file);
 	ls->file = NULL;
-	ls->nb_elem = 0;
-	// printf("end free\n");
+	ft_bzero(&ls->nb_elem, sizeof(size_t) * 7);
 }
 
 void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
@@ -86,11 +83,6 @@ void	ft_bubble_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 	}
 }
 
-void	ft_str_date(char date[13])
-{
-	return ;
-}
-
 // b     Block special file.
 // c     Character special file.
 // d     Directory.
@@ -108,15 +100,12 @@ void	ft_str_date(char date[13])
 // S_IFCHR	0020000	périphérique caractères
 // S_IFIFO	0010000	fifo
 
-#include <sys/acl.h>
 
 void	ft_str_mode(char src[12], mode_t mode)
 {
 	static char	str[] = "rwxrwxrwx";
 	int			i;
 	acl_t		acl = NULL;
-
-	// printf("\n%#o\n", mode);
 
 	if ((mode & S_IFMT) == S_IFSOCK)
 		src[0] = 's';
@@ -177,39 +166,36 @@ void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
 	type[1] = '\0';
 }
 
-void	ft_print_data(t_ls *ls, size_t i)
+void	ft_print_data(t_ls *ls, t_lf *file)
 {
 	char	mode[12];
 	char	type[2];
 	char	link[256];
+	char	date[13];
 	size_t	len;
 
 	len = 0;
 	if (ls->flag & LMIN)
 	{
-		ft_str_mode(mode, ls->file[i]->st.st_mode);
-		ft_printf("%s%c %*d %*s%*.*s  %*d %s ", mode, ' '
-			, ls->size_link, ls->file[i]->st.st_nlink, 8, "apouchet"
-			, (10 + 2) * ((ls->flag & OMIN) == 0), 10 * ((ls->flag & OMIN) == 0)
-			, "2016_paris", ls->size_size, ls->file[i]->st.st_size, "date");
-		if (ls->flag & LMIN && (ls->file[i]->st.st_mode & S_IFMT) == S_IFLNK)
+		ft_str_mode(mode, file->st.st_mode);
+		ft_printf("%s%c %*d %*s%*.*s  %*s %s ", mode, ' '
+			, ls->size_link, file->st.st_nlink, ls->size_user, file->user
+			, (ls->size_grp + 2) * ((ls->flag & OMIN) == 0), ls->size_grp * ((ls->flag & OMIN) == 0)
+			, file->grp, ls->size_size, file->size, file->date);
+		if (ls->flag & LMIN && (file->st.st_mode & S_IFMT) == S_IFLNK)
 		{
-			if ((len = readlink(ls->file[i]->pathname, link, 256)) < 0)
+			if ((len = readlink(file->pathname, link, 256)) < 0)
 				ft_exit(3, 0);
 		}
 	}
-	ft_flag_p_f(ls->file[i]->st.st_mode, ls->flag, type);
+	ft_flag_p_f(file->st.st_mode, ls->flag, type);
 	link[len] = '\0';
-	ft_printf("%s%.*s%.*s%.*s\n", ls->file[i]->name, type[0] != 0, type, 4 * (len > 0), " -> ", len, link);
+	ft_printf("%s%.*s%.*s%.*s\n", file->name, type[0] != 0, type, 4 * (len > 0), " -> ", len, link);
 }
 
 void	ft_affich(t_ls *ls)
 {
 	size_t	i;
-	char	*user;
-	char	*grp;
-	char	date[13];
-	
 
 	i = 0;
 	if (ls->flag & SMAJ)
@@ -222,9 +208,10 @@ void	ft_affich(t_ls *ls)
 		ft_printf("total %zu\n", ls->total_block);
 	while (i < ls->nb_elem)
 	{
+
 		if (ls->flag & SMIN)
 			ft_printf("%*zu ", ls->size_block, ls->file[i]->st.st_blocks);
-		ft_print_data(ls, i);
+		ft_print_data(ls, ls->file[i]);
 		i++;
 	}
 	if (!(ls->flag & DMIN) && ls->flag & RMAJ)
