@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/26 13:54:07 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:33:49 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 	nb = 0;
 	if (size == 0)
 		size = 1;
-	if (!(ls->to_read = (char**)malloc((sizeof(char*) * size + 1))))
+	if (!(ls->to_read = (char**)malloc((sizeof(char*) * (size_t)(size + 1)))))
 		ft_exit(2, 0);
 	ls->to_read[size] = NULL;
 	while (i < argc)
@@ -34,7 +34,7 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 		ls->to_read[nb] = ft_strdup(".");
 }
 
-static int		flag_stocker(char letter, int *flag)
+static int		flag_stocker(char letter, size_t *flag)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ static int		flag_stocker(char letter, int *flag)
 	{
 		if (FLAGS[i] == letter)
 		{
-			*flag = *flag | (int)ft_pow(2, i);
+			*flag = *flag | (size_t)ft_pow(2, i);
 			if (FLAGS[i] == 'p')
 				*flag &= (0xFFFF - FMAJ);
 			else if (FLAGS[i] == 'F')

@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 17:56:10 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/26 11:35:53 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:03:14 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ size_t	ft_nbrlen(long nb);
 size_t	ft_nbrlen_unsigned(size_t nb);
 
 char	*ft_itoa(int nb);
+
+char	*ft_itoa_unsigned(size_t nb);
+
+char	*ft_itoa_base(ssize_t nb, size_t base, int maj);
+
+char	*ft_itoa_unsigned_base(size_t nb, size_t base, int maj);
 
 size_t	ft_nbalpha(const char *s);
 
@@ -53,7 +59,9 @@ long	ft_atol(const char *str);
 
 size_t	ft_while_not_char(const char *a, size_t i, int c);
 
-double	ft_pow(double x, double y);
+ssize_t	ft_pow(ssize_t x, ssize_t y);
+
+double	ft_pow_double(double x, double y);
 
 float	ft_atof(char *s);
 

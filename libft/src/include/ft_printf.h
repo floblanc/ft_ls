@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 19:09:28 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/18 16:57:11 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:54:54 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,6 @@ void						lettre(t_val *a, va_list ap, int flag);
 int							nb(char *str, int i, t_val *a, int mode);
 
 void						ft_nombre(t_val *a, va_list ap, char flag);
-
-char						*ft_itoa_base(ssize_t nb, size_t base, int maj);
-
-char						*ft_itoa_unsigned_base(size_t nb, size_t base,
-	int maj);
 
 long long int				signe(t_val *a, va_list ap);
 

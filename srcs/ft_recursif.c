@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 14:34:48 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:24:34 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ char	*ft_create_path(char *path, char *file)
 void	ft_recursif(t_ls *ls)
 {
 	t_ls	new_ls;
-	int		i;
+	size_t	i;
 	char	*path;
-	struct	stat st;
 
 	i = 0;
 	while (i < ls->nb_elem)
 	{
 		// printf(". = %d, .. = %d, DIR = %d\n", ft_strcmp(ls->file[i]->name, "."), ft_strcmp(ls->file[i]->name, ".."), ls->file[i]->st.st_mode & S_IFDIR);
-		if (ft_strcmp(ls->file[i]->name, ".") && ft_strcmp(ls->file[i]->name, "..") && ls->file[i]->st.st_mode & S_IFDIR)
+		if (ft_strcmp(ls->file[i]->name, ".") && ft_strcmp(ls->file[i]->name, "..")
+			&& ls->file[i]->st.st_mode & S_IFDIR)
 		{
 			path = ft_create_path(ls->current_path, ls->file[i]->name);
 			ft_bzero(&new_ls, sizeof(t_ls));

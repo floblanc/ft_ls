@@ -6,7 +6,7 @@
 #    By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/21 15:42:31 by apouchet          #+#    #+#              #
-#    Updated: 2020/01/26 11:38:04 by apouchet         ###   ########.fr        #
+#    Updated: 2020/01/27 17:59:47 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRC_ELSE = ./src/else/ft_atof.c ./src/else/ft_atoi.c ./src/else/ft_atol.c \
 ./src/else/ft_pow.c ./src/else/ft_tolower.c ./src/else/ft_toupper.c \
 ./src/else/ft_unicode.c ./src/else/ft_unicode_len.c ./src/else/ft_while_char.c \
 ./src/else/ft_while_not_char.c ./src/else/ft_while_space.c \
-./src/else/ft_ulltoa.c
+./src/else/ft_ulltoa.c ./src/else/ft_itoa_unsigned_base.c \
+./src/else/ft_itoa_base.c
 
 SRC_IS = ./src/is/ft_isalnum.c ./src/is/ft_isalpha.c ./src/is/ft_isascii.c \
 ./src/is/ft_ischar.c ./src/is/ft_isdigit.c ./src/is/ft_islower.c \
@@ -62,7 +63,7 @@ SRC_LST = ./src/lst/ft_list_push_front.c ./src/lst/ft_lstadd.c \
 SRC_PTF = ./src/ft_printf/decalage.c ./src/ft_printf/else.c \
 ./src/ft_printf/ft_nombre.c ./src/ft_printf/ft_printf.c \
 ./src/ft_printf/ft_printf_char.c ./src/ft_printf/ft_printf_nb.c \
-./src/ft_printf/octo.c
+
 
 SRC_GNL = ./src/gnl/get_next_line.c
 

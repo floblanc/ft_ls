@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/27 15:32:29 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:46:08 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,9 @@
 // to do F / l
 typedef struct		s_lf
 {
+	// unsigned char	type;
 	char			*pathname;
 	char			*name;
-	unsigned char	type;
-
-	// mode_t			mode;		/* protection */
-	// nlink_t			nb_link;	/* number of hard links */
-	// uid_t			uid;		 user ID of owner 
-	// gid_t			gid;		/* group ID of owner */
-	// off_t			file_size;	/* total size, in bytes */
-	// time_t			mtime;		/* time of last modification */
-
-	// char			*link;
 	char			*date;
 	char			*user;
 	char			*grp;
@@ -68,9 +59,16 @@ typedef struct		s_lf
 	struct stat 	st;
 	size_t			smajor;
 	size_t			sminor;
-	int				major;
-	int				minor;
-	
+	size_t			major;
+	size_t			minor;
+	// mode_t			mode;		/* protection */
+	// nlink_t			nb_link;	/* number of hard links */
+	// uid_t			uid;		 user ID of owner 
+	// gid_t			gid;		/* group ID of owner */
+	// off_t			file_size;	/* total size, in bytes */
+	// time_t			mtime;		/* time of last modification */
+
+	// char			*link;	
 
 	
 	// dev_t			st_dev;     /* ID of device containing file */
@@ -112,7 +110,7 @@ typedef struct		s_lf
 
 typedef struct		s_ls
 {
-	int				flag;
+	size_t			flag;
 	char			**to_read;
 
 	size_t			nb_elem;

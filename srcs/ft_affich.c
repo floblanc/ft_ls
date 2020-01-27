@@ -6,14 +6,14 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 15:52:29 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:29:13 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 #include <sys/acl.h>
 
-void	ft_free_ls(t_ls *ls)
+static void	ft_free_ls(t_ls *ls)
 {
 	size_t i;
 
@@ -34,12 +34,12 @@ void	ft_free_ls(t_ls *ls)
 	ft_bzero(&ls->nb_elem, sizeof(size_t) * 7);
 }
 
-void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
+static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 {
 	size_t	i;
 	size_t	best;
 	size_t	pos;
-	t_lf			*tmp;
+	t_lf	*tmp;
 
 	pos = 0;
 	if (!ls->nb_elem)
@@ -63,26 +63,6 @@ void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 	}
 }
 
-void	ft_bubble_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
-{
-	unsigned int	i;
-	t_lf			*tmp;
-
-	i = 1;
-	while (i < ls->nb_elem)
-	{
-		// printf("%d == %d\n", (!(ls->flag & RMIN)), (cmp(ls->file[i - 1], ls->file[i])));
-		if ((!(ls->flag & RMIN)) == !(cmp(ls->file[i - 1], ls->file[i])))
-		{
-			tmp = ls->file[i - 1];
-			ls->file[i - 1] = ls->file[i];
-			ls->file[i] = tmp;
-			i = 0;
-		}
-		i++;
-	}
-}
-
 // b     Block special file.
 // c     Character special file.
 // d     Directory.
@@ -101,11 +81,11 @@ void	ft_bubble_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 // S_IFIFO	0010000	fifo
 
 
-void	ft_str_mode(char src[12], mode_t mode)
+static void	ft_str_mode(char src[12], mode_t mode)
 {
 	static char	str[] = "rwxrwxrwx";
 	int			i;
-	acl_t		acl = NULL;
+	// acl_t		acl = NULL;
 	mode_t		tmp;
 
 	tmp = mode & S_IFMT; 
@@ -141,7 +121,7 @@ void	ft_str_mode(char src[12], mode_t mode)
 	// src[11] = '\0';
 }
 
-void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
+static void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
 {
 	type[0] = '\0';
 	if ((flag & PMIN || flag & FMAJ) && (mode & S_IFMT) == S_IFDIR)
@@ -172,13 +152,12 @@ void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
 	type[1] = '\0';
 }
 
-void	ft_print_data(t_ls *ls, t_lf *file)
+static void	ft_print_data(t_ls *ls, t_lf *file)
 {
 	char	mode[12];
 	char	type[2];
 	char	link[256];
-	char	date[13];
-	size_t	len;
+	ssize_t	len;
 
 	len = 0;
 	if (ls->flag & LMIN)

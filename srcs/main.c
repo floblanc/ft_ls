@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/27 14:36:09 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:42:58 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 	DIR		*rep;
 	struct	dirent *dir;
 
-	if (!(ls->file = (t_lf**)ft_memalloc(sizeof(t_lf*) * (size + 1))))
+	if (!(ls->file = (t_lf**)ft_memalloc(sizeof(t_lf*) * (size_t)(size + 1))))
 		ft_exit(2, 0);
 	ls->current_path = path;
 	if ((rep = opendir(ls->current_path)) == NULL)
