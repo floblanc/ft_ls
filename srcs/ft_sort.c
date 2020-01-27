@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sort.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:27:27 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 17:36:55 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:51:13 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,15 @@ int		ft_less_t_cmp(t_lf *f1, t_lf *f2)
 		return (ft_ascii_cmp(f1, f2));
 	return (diff > 0);
 }
+
+
+// -c      Use time when file status was last changed for sorting (-t)
+//              or long printing (-l).
+
+// -f      Output is not sorted.  This option turns on the -a option.
+
+// -u      Use time of last access, instead of last modification of
+//              the file for sorting (-t) or long printing (-l).
+
+// -U      Use time of file creation, instead of last modification for
+//      sorting (-t) or long output (-l).

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_affich.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 17:29:13 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:32:19 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
-#include <sys/acl.h>
 
 static void	ft_free_ls(t_ls *ls)
 {
@@ -24,15 +23,32 @@ static void	ft_free_ls(t_ls *ls)
 		ft_strdel(&ls->file[i]->pathname);
 		ft_strdel(&ls->file[i]->user);
 		ft_strdel(&ls->file[i]->grp);
-		ft_strdel(&ls->file[i]->size);
-		free(ls->file[i]);
+		// ft_strdel(&ls->file[i]->size);
+		// free(ls->file[i]);
 		ls->file[i] = NULL;
 		i++;
 	}
-	free(ls->file);
+	// free(ls->file);
 	ls->file = NULL;
-	ft_bzero(&ls->nb_elem, sizeof(size_t) * 7);
+	ft_bzero(&ls->nb_elem, sizeof(size_t) * 9);
 }
+
+// b     Block special file.
+// c     Character special file.
+// d     Directory.
+// l     Symbolic link.
+// s     Socket link.
+// p     FIFO.
+// -     Regular file.
+
+// S_IFMT	0170000	masque du type de fichier
+// S_IFSOCK	0140000	socket
+// S_IFLNK	0120000	lien symbolique
+// S_IFREG	0100000	fichier ordinaire
+// S_IFBLK	0060000	périphérique blocs
+// S_IFDIR	0040000	répertoire
+// S_IFCHR	0020000	périphérique caractères
+// S_IFIFO	0010000	fifo
 
 static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 {
@@ -61,64 +77,6 @@ static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 		ls->file[pos] = tmp;
 		pos++;
 	}
-}
-
-// b     Block special file.
-// c     Character special file.
-// d     Directory.
-// l     Symbolic link.
-// s     Socket link.
-// p     FIFO.
-// -     Regular file.
-
-// S_IFMT	0170000	masque du type de fichier
-// S_IFSOCK	0140000	socket
-// S_IFLNK	0120000	lien symbolique
-// S_IFREG	0100000	fichier ordinaire
-// S_IFBLK	0060000	périphérique blocs
-// S_IFDIR	0040000	répertoire
-// S_IFCHR	0020000	périphérique caractères
-// S_IFIFO	0010000	fifo
-
-
-static void	ft_str_mode(char src[12], mode_t mode)
-{
-	static char	str[] = "rwxrwxrwx";
-	int			i;
-	// acl_t		acl = NULL;
-	mode_t		tmp;
-
-	tmp = mode & S_IFMT; 
-	if (tmp == S_IFSOCK)
-		src[0] = 's';
-	else if (tmp == S_IFLNK)
-		src[0] = 'l';
-	else if (tmp == S_IFREG)
-		src[0] = '-';
-	else if (tmp == S_IFBLK)
-		src[0] = 'b';
-	else if (tmp == S_IFDIR)
-		src[0] = 'd';
-	else if (tmp == S_IFCHR)
-		src[0] = 'c';
-	else if (tmp == S_IFIFO)
-		src[0] = 'p';
-	i = 0;
-	while (++i < 10)
-		src[i] = (mode & (1 << (9 - i))) ? str[i - 1] : '-';
-	src[10] = '\0';
-
-	// acl = acl_get_link_np(name, ACL_TYPE_EXTENDED);
-	// if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &dummy) == -1)
-	// {
-	// 	acl_free(acl);
-	// 	acl = NULL;
-	// }
-	// if (listxattr(name, NULL, 0, XATTR_NOFOLLOW) > 0)
-	// 	src[10] = '@';
-	// else if (acl != NULL)
-	// 	src[10] = '+';
-	// src[11] = '\0';
 }
 
 static void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
@@ -162,10 +120,10 @@ static void	ft_print_data(t_ls *ls, t_lf *file)
 	len = 0;
 	if (ls->flag & LMIN)
 	{
-		ft_str_mode(mode, file->st.st_mode);
-		ft_printf("%s%c %*d %*s%*.*s  %*s %s ", mode, ' '
-			, ls->size_link, file->st.st_nlink, ls->size_user, file->user
-			, (ls->size_grp + 2) * ((ls->flag & OMIN) == 0), ls->size_grp * ((ls->flag & OMIN) == 0)
+		ft_str_mode(mode, file->st.st_mode, file->pathname);
+		ft_printf("%s %*d %*s%*.*s  %*s %s ", mode, ls->size_link
+			, file->st.st_nlink, ls->size_user, file->user, (ls->size_grp + 2)
+			* ((ls->flag & OMIN) == 0), ls->size_grp * ((ls->flag & OMIN) == 0)
 			, file->grp, ls->size_size, file->size, file->date);
 		if (ls->flag & LMIN && (file->st.st_mode & S_IFMT) == S_IFLNK)
 		{
@@ -175,7 +133,8 @@ static void	ft_print_data(t_ls *ls, t_lf *file)
 	}
 	ft_flag_p_f(file->st.st_mode, ls->flag, type);
 	link[len] = '\0';
-	ft_printf("%s%.*s%.*s%.*s\n", file->name, type[0] != 0, type, 4 * (len > 0), " -> ", len, link);
+	ft_printf("%s%.*s%.*s%.*s\n", file->name, type[0] != 0, type, 4 * (len > 0)
+		, " -> ", len, link);
 }
 
 void	ft_affich(t_ls *ls)

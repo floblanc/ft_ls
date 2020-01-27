@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/27 18:34:24 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:08:50 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,22 @@ static void	ft_new_file(t_ls *ls, int *size, struct	dirent *dir)
 	// printf("par la\n");
 	ls->file[ls->nb_elem]->pathname = ft_create_path(ls->current_path, dir->d_name);
 	ls->nb_elem++;
-	if (ls->nb_elem == (size_t)(*size))
-	{
-		tmp = ls->file;
-		size += 8;
-		// printf("fail ici\n");
-		if (!(ls->file = (t_lf**)ft_memalloc(sizeof(t_lf*) * (size_t)(size + 1))))
-			ft_exit(2, 0);
-		// printf("fail la\n");
-		while (i < ls->nb_elem)
-		{
-			ls->file[i] = tmp[i];
-			i++;
-		}
-		free(tmp);
-	}
+	// if (ls->nb_elem == (size_t)(*size))
+	// {
+	// 	tmp = ls->file;
+	// 	size += 8;
+	// 	if (!(ls->file = (t_lf**)ft_memalloc(sizeof(t_lf*) * (size_t)(size + 1))))
+	// 		ft_exit(2, 0);
+	// 	while (i < ls->nb_elem)
+	// 	{
+	// 		ls->file[i] = tmp[i];
+	// 		i++;
+	// 	}
+	// 	free(tmp);
+	// }
 }
 
-int		ft_read_dir(t_ls *ls, char *path, int size)
+void	ft_read_dir(t_ls *ls, char *path, int size)
 {
 	DIR		*rep;
 	struct	dirent *dir;
@@ -77,9 +75,9 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 		perror("perror ft_read_dir -> ft_ls ");
 	else
 	{
-		// printf("la\n");
 		while ((dir = readdir(rep)) != NULL)
 		{
+			// printf("name = %s\n", dir->d_name);
 			if (dir->d_name[0] != '.' || ls->flag & AMIN || (ls->flag & AMAJ
 				&& ft_strcmp(dir->d_name, ".") && ft_strcmp(dir->d_name, "..")))
 				ft_new_file(ls, &size, dir);
@@ -87,12 +85,11 @@ int		ft_read_dir(t_ls *ls, char *path, int size)
 		closedir(rep);
 	}
 	ft_long_format(ls);
-	return (0);
 }
 
 int		main(int argc, char **argv)
 {
-	t_ls	ls;
+	t_ls		ls;
 	struct stat st;
 
 	ft_bzero(&ls, sizeof(t_ls));
@@ -101,8 +98,8 @@ int		main(int argc, char **argv)
 	{
 		if (lstat(*ls.to_read, &st) == -1)
 			perror("perror main -> ft_ls ");
-		else if (st.st_mode & S_IFDIR && !(ls.flag & DMIN))
-			ft_read_dir(&ls, *ls.to_read, st.st_nlink);
+		else if (((st.st_mode & S_IFMT) == S_IFDIR) && !(ls.flag & DMIN))
+			ft_read_dir(&ls, *ls.to_read, ft_dir_size(*ls.to_read));
 		else
 		{
 			if (!(ls.file = (t_lf**)ft_memalloc(sizeof(t_lf*) * 2))
@@ -112,7 +109,6 @@ int		main(int argc, char **argv)
 			ls.current_path = ft_strdup("");
 			ls.file[ls.nb_elem++]->pathname
 			= ft_create_path(ls.current_path, *ls.to_read);
-			printf("ok\n");
 			ft_long_format(&ls);
 		}
 		free(*ls.to_read);

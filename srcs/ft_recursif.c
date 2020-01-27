@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_recursif.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 17:24:34 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 22:46:04 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,23 @@ char	*ft_create_path(char *path, char *file)
 	// return (new);
 }
 
+size_t	ft_dir_size(char *path)
+{
+	size_t size;
+	DIR		*rep;
+	struct	dirent *dir;
+
+	size = 1;
+	if ((rep = opendir(path)) == NULL)
+		perror("perror ft_read_dir -> ft_ls ");
+	else
+	{
+		while ((dir = readdir(rep)) != NULL)
+			size++;
+		closedir(rep);
+	}
+	return (size);
+}
 
 void	ft_recursif(t_ls *ls)
 {
@@ -60,14 +77,15 @@ void	ft_recursif(t_ls *ls)
 	while (i < ls->nb_elem)
 	{
 		// printf(". = %d, .. = %d, DIR = %d\n", ft_strcmp(ls->file[i]->name, "."), ft_strcmp(ls->file[i]->name, ".."), ls->file[i]->st.st_mode & S_IFDIR);
-		if (ft_strcmp(ls->file[i]->name, ".") && ft_strcmp(ls->file[i]->name, "..")
-			&& ls->file[i]->st.st_mode & S_IFDIR)
+		if (ft_strcmp(ls->file[i]->name, ".")
+			&& ft_strcmp(ls->file[i]->name, "..")
+			&& (ls->file[i]->st.st_mode & S_IFMT) == S_IFDIR)
 		{
 			path = ft_create_path(ls->current_path, ls->file[i]->name);
 			ft_bzero(&new_ls, sizeof(t_ls));
 			new_ls.flag = ls->flag;
 			ft_printf("\n%s:\n", path);
-			ft_read_dir(&new_ls, path, ls->file[i]->st.st_nlink);
+			ft_read_dir(&new_ls, path, ft_dir_size(path));
 			free(path);
 		}
 		i++;

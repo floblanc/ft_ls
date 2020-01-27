@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/27 17:46:08 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:30:37 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/xattr.h>
 // # include "../libftprintf/include/libprintf.h"
 #include "../libft/libft.h"
+#include <sys/acl.h>
 
 # define AMAJ 1
 # define FMAJ 2
@@ -127,7 +128,7 @@ typedef struct		s_ls
 	t_lf			**file;
 }					t_ls;
 
-int		ft_read_dir(t_ls *ls, char *path, int size);
+void	ft_read_dir(t_ls *ls, char *path, int size);
 
 void	ft_get_flag(t_ls *ls, int argc, char **argv);
 
@@ -145,7 +146,13 @@ char	*ft_create_path(char *path, char *file);
 
 void	ft_recursif(t_ls *ls);
 
-int		ft_long_format(t_ls *ls);
+void	ft_long_format(t_ls *ls);
+
+size_t	ft_dir_size(char *path);
+
+void	ft_get_user_grp(t_ls *ls, struct stat st, t_lf *file);
+
+void	ft_str_mode(char src[12], mode_t mode, char *pathname);
 
 #endif
 
