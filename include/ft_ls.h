@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/27 12:51:21 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:32:29 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ typedef struct		s_lf
 	char			*grp;
 	char			*size;
 	struct stat 	st;
+	size_t			smajor;
+	size_t			sminor;
+	int				major;
+	int				minor;
+	
 
 	
 	// dev_t			st_dev;     /* ID of device containing file */
@@ -116,6 +121,8 @@ typedef struct		s_ls
 	size_t			size_user;
 	size_t			size_grp;
 	size_t			size_size;
+	size_t			size_major;
+	size_t			size_minor;
 	size_t			total_block;
 
 	char			*current_path;

@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 12:50:53 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:52:29 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,20 +106,22 @@ void	ft_str_mode(char src[12], mode_t mode)
 	static char	str[] = "rwxrwxrwx";
 	int			i;
 	acl_t		acl = NULL;
+	mode_t		tmp;
 
-	if ((mode & S_IFMT) == S_IFSOCK)
+	tmp = mode & S_IFMT; 
+	if (tmp == S_IFSOCK)
 		src[0] = 's';
-	else if ((mode & S_IFMT) == S_IFLNK)
+	else if (tmp == S_IFLNK)
 		src[0] = 'l';
-	else if ((mode & S_IFMT) == S_IFREG)
+	else if (tmp == S_IFREG)
 		src[0] = '-';
-	else if ((mode & S_IFMT) == S_IFBLK)
+	else if (tmp == S_IFBLK)
 		src[0] = 'b';
-	else if ((mode & S_IFMT) == S_IFDIR)
+	else if (tmp == S_IFDIR)
 		src[0] = 'd';
-	else if ((mode & S_IFMT) == S_IFCHR)
+	else if (tmp == S_IFCHR)
 		src[0] = 'c';
-	else if ((mode & S_IFMT) == S_IFIFO)
+	else if (tmp == S_IFIFO)
 		src[0] = 'p';
 	i = 0;
 	while (++i < 10)
@@ -150,6 +152,10 @@ void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
 			type[0] = '=';
 		else if ((mode & S_IFMT) == S_IFLNK)
 			type[0] = '@';
+		else if ((mode & S_IFMT) == S_IFWHT)
+			type[0] = '%';
+		else if ((mode & S_IFMT) == 0150000)
+			type[0] = '>';
 		// else if ((mode & S_IFMT) == S_IFDIR)
 		// 	type[0] = '/';
 		// else if ((mode & S_IFMT) == S_IFBLK)

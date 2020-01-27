@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 11:49:05 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:34:48 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*ft_create_path(char *path, char *file)
 	j = 0;
 	while (j < size_a)
 		new[i++] = path[j++];
-	new[i++] = '/';
+	if (file[0] != '/')
+		new[i++] = '/';
 	j = 0;
 	while (j < size_b)
 		new[i++] = file[j++];

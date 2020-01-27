@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/26 16:43:37 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:36:09 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ int		main(int argc, char **argv)
 				|| !(ls.file[ls.nb_elem] = (t_lf*)malloc(sizeof(t_lf)))
 				|| !(ls.file[ls.nb_elem]->name = ft_strdup(*ls.to_read)))
 				ft_exit(2, 0);
-			ls.current_path = ft_strdup(".");
+			ls.current_path = ft_strdup("");
 			ls.file[ls.nb_elem++]->pathname = ft_create_path(ls.current_path, *ls.to_read);
+			printf("ok\n");
 			ft_long_format(&ls);
 		}
 		free(*ls.to_read);
