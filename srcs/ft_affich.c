@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 16:40:34 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:58:36 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ static void	ft_free_ls(t_ls *ls)
 		ft_strdel(&ls->file[i]->name);
 		ft_strdel(&ls->file[i]->pathname);
 		ft_strdel(&ls->file[i]->user);
+		ft_strdel(&ls->file[i]->date);
 		ft_strdel(&ls->file[i]->grp);
-		// ft_strdel(&ls->file[i]->size);
+		ft_strdel(&ls->file[i]->size);
 		free(ls->file[i]);
 		ls->file[i] = NULL;
 		i++;
 	}
-	// free(ls->file);
+	free(ls->file);
 	ls->file = NULL;
 	ft_bzero(&ls->nb_elem, sizeof(size_t) * 9);
 }

@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/28 14:03:16 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:58:57 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ int		main(int argc, char **argv)
 {
 	t_ls		ls;
 	struct stat st;
+	void*		cpy;
 
 	ft_bzero(&ls, sizeof(t_ls));
 	ft_get_flag(&ls, argc, argv);
+	cpy = ls.to_read;
 	while (*ls.to_read)
 	{
 		if (lstat(*ls.to_read, &st) == -1)
@@ -114,6 +116,7 @@ int		main(int argc, char **argv)
 		free(*ls.to_read);
 		ls.to_read++;
 	}
+	free(cpy);
 	return (0);
 }
 
