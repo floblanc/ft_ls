@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/28 13:12:10 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/28 14:01:49 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,16 @@
 # define DMIN 0x00000100
 # define FMIN 0x00000200
 # define HMIN 0x00000400
-# define LMIN 0x00000800
-# define NMIN 0x00001000
-# define OMIN 0x00002000
-# define PMIN 0x00004000
-# define RMIN 0x00008000
-# define SMIN 0x00010000
-# define TMIN 0x00020000
-# define UMIN 0x00040000
-# define FLAGS "AFRSTUacdfhlnoprstu"
+# define IMIN 0x00000800
+# define LMIN 0x00001000
+# define NMIN 0x00002000
+# define OMIN 0x00004000
+# define PMIN 0x00008000
+# define RMIN 0x00010000
+# define SMIN 0x00020000
+# define TMIN 0x00040000
+# define UMIN 0x00080000
+# define FLAGS "AFRSTUacdfhilnoprstu"
 
 // LMIN SMIN SMAJ TMIN FMAJ PMIN RMAJ
 

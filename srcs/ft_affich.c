@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 13:57:31 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 14:02:46 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,8 @@ void	ft_affich(t_ls *ls)
 		ft_printf("total %zu\n", ls->total_block);
 	while (i < ls->nb_elem)
 	{
-
+		if (ls->flag & IMIN)
+			ft_printf("%*zu ", ls->size_block, ls->file[i]->st.st_ino);
 		if (ls->flag & SMIN)
 			ft_printf("%*zu ", ls->size_block, ls->file[i]->st.st_blocks);
 		ft_print_data(ls, ls->file[i]);
@@ -160,6 +161,5 @@ void	ft_affich(t_ls *ls)
 	}
 	if (!(ls->flag & DMIN) && ls->flag & RMAJ)
 		ft_recursif(ls);
-	printf("max : major = %zu, minor = %zu, size = %zu\n", ls->size_major, ls->size_minor, ls->size_size);
 	ft_free_ls(ls);
 }
