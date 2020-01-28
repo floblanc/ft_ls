@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 11:47:42 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:57:20 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*ft_less_h_min(char *letters, char *ret, int i, int size)
 
 static char	*ft_get_size(size_t size, size_t flag)
 {
-	char	*ret = NULL;
+	char	*ret;
 
 	if (flag & HMIN && flag & LMIN)
 		return (ft_less_h_min("BKMGTPE", ret, 0, (int)size));
@@ -52,27 +52,27 @@ static char	*ft_get_size(size_t size, size_t flag)
 	return (ret);
 }
 
-static char	*ft_get_date(time_t date)
+static char	*ft_get_date(t_lf *file, size_t *flag)
 {
 	time_t	now;
+	time_t	date;
 	double	diff;
-	char	*ret = NULL;
-	char	*tmp = NULL;
+	char	*ret;
+	char	*tmp;
 
-	// printf("start get date\n");
+	if (*flag & CMIN)
+		date = file->st.st_mtime;
+	else if (*flag & UMIN)
+		date = file->st.st_atime;
+	else if (*flag & UMAJ)
+		date = file->st.st_birthtime;
 	diff = difftime(date, time(&now));
-	// printf("diff ?\n");
-	// printf("date = %ld\n", date);
 	tmp = ctime(&date);
-	// printf("ctime ok\n");
-	// printf("tmp = %s\n", tmp);
 	if (!(ret = ft_strdup(&tmp[4])))
 		ft_exit(2, 0);
-	// printf("strdup ok\n");
-	if (!(diff <= 0 && diff > -15552000))
+	if (!(diff <= 0 && diff > -15552000) && !(*flag & TMAJ))
 		ft_strcpy(&(ret[7]), &(ret[15]));
-	// printf("strcpy ok\n");
-	ret[12] = 0;
+	ret[(*flag & TMAJ ? 20 : 12)] = 0;
 	return (ret);
 }
 
@@ -111,16 +111,16 @@ void		ft_get_user_grp(t_ls *ls, struct stat st, t_lf *file)
 	struct group	*grp;
 
 	file->st = st;
-	file->date = ft_get_date(file->st.st_mtime);
+	file->date = ft_get_date(file, &(ls->flag));
 	file->size = ft_get_size((size_t)file->st.st_size, ls->flag);
 	if ((ls->flag & NMIN) == 0)
 	{
 		if ((user = getpwuid(file->st.st_uid)) != NULL)
-			file->user =  ft_strdup(user->pw_name);
+			file->user = ft_strdup(user->pw_name);
 		if ((ls->flag & OMIN) == 0)
 		{
 			if ((grp = getgrgid(file->st.st_gid)) != NULL)
-				file->grp =  ft_strdup(grp->gr_name);
+				file->grp = ft_strdup(grp->gr_name);
 		}
 	}
 	if ((ls->flag & OMIN) == 0 && file->grp == NULL)

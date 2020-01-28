@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 11:57:22 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:57:25 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	ft_long_format(t_ls *ls)
 	if (ls->flag & LMIN || ls->flag & SMIN || ls->flag & SMAJ || ls->flag & TMIN
 		|| ls->flag & FMAJ || ls->flag & PMIN || ls->flag & RMAJ)
 	{
-		while (i < ls->nb_elem)	
+		while (i < ls->nb_elem)
 		{
 			if (lstat(ls->file[i]->pathname, &st) == -1)
 			{

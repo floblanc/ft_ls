@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 19:18:19 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 11:42:51 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,22 @@ static int		flag_stocker(char letter, size_t *flag)
 	int	i;
 
 	i = 0;
+	*flag |= CMIN;
 	while (FLAGS[i])
 	{
 		if (FLAGS[i] == letter)
 		{
-			*flag = *flag | (size_t)ft_pow(2, i);
+			*flag |= (size_t)ft_pow(2, i);
 			if (FLAGS[i] == 'p')
-				*flag &= (0xFFFF - FMAJ);
+				*flag &= (0xFFFFFFFF - FMAJ);
 			else if (FLAGS[i] == 'F')
-				*flag &= (0xFFFF - PMIN);
+				*flag &= (0xFFFFFFFF - PMIN);
+			else if (FLAGS[i] == 'U')
+				*flag &= (0xFFFFFFFF - (UMIN + CMIN));
+			else if (FLAGS[i] == 'u')
+				*flag &= (0xFFFFFFFF - (UMAJ + CMIN));
+			else if (FLAGS[i] == 'c')
+				*flag &= (0xFFFFFFFF - (UMIN + UMAJ));
 			return (1);
 		}
 		i++;
@@ -67,13 +74,10 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 	{
 		if (argv[i][0] == '-')
 		{
-			j = 1;
-			while (argv[i][j])
-			{
+			j = 0;
+			while (argv[i][++j])
 				if (!(flag_stocker(argv[i][j], &(ls->flag))))
 					ft_exit(1, argv[i][j]);
-				j++;
-			}
 		}
 		else
 			size++;
@@ -81,5 +85,7 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 	}
 	if (ls->flag & OMIN || ls->flag & NMIN)
 		ls->flag |= LMIN;
+	if (ls->flag & FMIN)
+		ls->flag |= AMIN;
 	ft_get_to_read(ls, size, argc, argv);
 }

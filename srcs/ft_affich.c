@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 12:21:10 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:57:31 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	ft_free_ls(t_ls *ls)
 // S_IFCHR	0020000	périphérique caractères
 // S_IFIFO	0010000	fifo
 
-static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
+static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2, size_t *f))
 {
 	size_t	i;
 	size_t	best;
@@ -58,7 +58,7 @@ static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 	t_lf	*tmp;
 
 	pos = 0;
-	if (!ls->nb_elem)
+	if (!(ls->nb_elem) || ls->flag & FMIN)
 		return ;
 	while (pos < ls->nb_elem - 1)
 	{
@@ -68,7 +68,7 @@ static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2))
 		while (i < ls->nb_elem)
 		{
 			// printf("i = %zu\n", i);
-			if ((!(ls->flag & RMIN)) == !(cmp(ls->file[best], ls->file[i])))
+			if ((!(ls->flag & RMIN)) == !(cmp(ls->file[best], ls->file[i], &(ls->flag))))
 				best = i;
 			i++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/27 23:30:37 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:12:10 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,26 @@
 #include "../libft/libft.h"
 #include <sys/acl.h>
 
-# define AMAJ 1
-# define FMAJ 2
-# define RMAJ 4
-# define SMAJ 8
-# define AMIN 16
-# define DMIN 32
-# define HMIN 64
-# define LMIN 128
-# define NMIN 256
-# define OMIN 512
-# define PMIN 1024
-# define RMIN 2048
-# define SMIN 4096
-# define TMIN 8192
-# define FLAGS "AFRSadhlnoprst"
+# define AMAJ 0x00000001
+# define FMAJ 0x00000002
+# define RMAJ 0x00000004
+# define SMAJ 0x00000008
+# define TMAJ 0x00000010
+# define UMAJ 0x00000020
+# define AMIN 0x00000040
+# define CMIN 0x00000080
+# define DMIN 0x00000100
+# define FMIN 0x00000200
+# define HMIN 0x00000400
+# define LMIN 0x00000800
+# define NMIN 0x00001000
+# define OMIN 0x00002000
+# define PMIN 0x00004000
+# define RMIN 0x00008000
+# define SMIN 0x00010000
+# define TMIN 0x00020000
+# define UMIN 0x00040000
+# define FLAGS "AFRSTUacdfhlnoprstu"
 
 // LMIN SMIN SMAJ TMIN FMAJ PMIN RMAJ
 
@@ -136,11 +141,11 @@ void	ft_exit(int mode, char c);
 
 void	ft_affich(t_ls *ls);
 
-int		ft_ascii_cmp(t_lf *f1, t_lf *f2);
+int		ft_ascii_cmp(t_lf *f1, t_lf *f2, size_t *flag);
 
-int		ft_less_s_maj_cmp(t_lf *f1, t_lf *f2);
+int		ft_less_s_maj_cmp(t_lf *f1, t_lf *f2, size_t *flag);
 
-int		ft_less_t_cmp(t_lf *f1, t_lf *f2);
+int		ft_less_t_cmp(t_lf *f1, t_lf *f2, size_t *flag);
 
 char	*ft_create_path(char *path, char *file);
 
