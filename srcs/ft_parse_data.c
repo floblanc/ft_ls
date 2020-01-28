@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_data.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 13:57:20 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 15:57:20 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,13 @@ static char	*ft_less_h_min(char *letters, char *ret, int i, int size)
 	return (ret);
 }
 
-static char	*ft_get_size(size_t size, size_t flag)
+static char	*ft_get_size(t_lf *file, size_t size, size_t flag)
 {
 	char	*ret;
 
+	if (((file->st.st_mode & S_IFMT) == S_IFCHR
+			|| (file->st.st_mode & S_IFMT) == S_IFBLK))
+			return (NULL);
 	if (flag & HMIN && flag & LMIN)
 		return (ft_less_h_min("BKMGTPE", ret, 0, (int)size));
 	if (!(ret = ft_ulltoa(size)))
@@ -112,7 +115,7 @@ void		ft_get_user_grp(t_ls *ls, struct stat st, t_lf *file)
 
 	file->st = st;
 	file->date = ft_get_date(file, &(ls->flag));
-	file->size = ft_get_size((size_t)file->st.st_size, ls->flag);
+	file->size = ft_get_size(file, (size_t)file->st.st_size, ls->flag);
 	if ((ls->flag & NMIN) == 0)
 	{
 		if ((user = getpwuid(file->st.st_uid)) != NULL)

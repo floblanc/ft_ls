@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 13:57:25 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 15:55:45 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ static char	*ft_device_minor_size(t_ls *ls, t_lf *file, char *tmp, char *nb)
 static void	ft_device_size(t_ls *ls)
 {
 	size_t	i;
-	char	*nb = NULL;
-	char	*tmp = NULL;
+	char	*nb;
+	char	*tmp;
 	int		hex;
 
 	i = 0;
@@ -135,10 +135,7 @@ void	ft_long_format(t_ls *ls)
 		while (i < ls->nb_elem)
 		{
 			if (lstat(ls->file[i]->pathname, &st) == -1)
-			{
-				printf("get long for : %s\n", ls->file[i]->pathname);
 				perror("perror ft_long_format -> ft_ls ");
-			}
 			else
 				ft_get_user_grp(ls, st, ls->file[i]);
 			i++;
