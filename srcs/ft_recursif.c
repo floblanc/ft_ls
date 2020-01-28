@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_recursif.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 22:46:04 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:19:11 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ size_t	ft_dir_size(char *path)
 	struct	dirent *dir;
 
 	size = 1;
-	if ((rep = opendir(path)) == NULL)
-		perror("perror ft_read_dir -> ft_ls ");
-	else
+	if ((rep = opendir(path)) != NULL)
 	{
 		while ((dir = readdir(rep)) != NULL)
 			size++;

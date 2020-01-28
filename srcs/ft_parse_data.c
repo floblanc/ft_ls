@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_data.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 23:03:35 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 11:47:42 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ static void	ft_get_maxsize(t_ls *ls, t_lf *file)
 		if (ls->size_major < (file->smajor = ft_nbrlen_unsigned(file->major)))
 			ls->size_major = file->smajor;
 		if (ls->size_minor < (file->sminor = ft_nbrlen_unsigned(file->minor)))
-			ls->size_minor = file->sminor;
-		tmp = file->smajor + file->sminor + 2;
+			ls->size_minor = (file->minor < 256 ? file->sminor : 0);
+		tmp = file->smajor + (file->minor < 256 ? file->sminor : 0) + 4;
 	}
 	else
 		tmp = ft_strlen(file->size);

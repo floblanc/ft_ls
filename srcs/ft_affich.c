@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_affich.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 23:32:19 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:21:10 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_free_ls(t_ls *ls)
 		ft_strdel(&ls->file[i]->user);
 		ft_strdel(&ls->file[i]->grp);
 		// ft_strdel(&ls->file[i]->size);
-		// free(ls->file[i]);
+		free(ls->file[i]);
 		ls->file[i] = NULL;
 		i++;
 	}
@@ -121,8 +121,8 @@ static void	ft_print_data(t_ls *ls, t_lf *file)
 	if (ls->flag & LMIN)
 	{
 		ft_str_mode(mode, file->st.st_mode, file->pathname);
-		ft_printf("%s %*d %*s%*.*s  %*s %s ", mode, ls->size_link
-			, file->st.st_nlink, ls->size_user, file->user, (ls->size_grp + 2)
+		ft_printf("%s %*d %*s  %*.*s%*s %s ", mode, ls->size_link
+			, file->st.st_nlink, -ls->size_user, file->user, (-ls->size_grp - 2)
 			* ((ls->flag & OMIN) == 0), ls->size_grp * ((ls->flag & OMIN) == 0)
 			, file->grp, ls->size_size, file->size, file->date);
 		if (ls->flag & LMIN && (file->st.st_mode & S_IFMT) == S_IFLNK)
@@ -160,5 +160,6 @@ void	ft_affich(t_ls *ls)
 	}
 	if (!(ls->flag & DMIN) && ls->flag & RMAJ)
 		ft_recursif(ls);
+	printf("max : major = %zu, minor = %zu, size = %zu\n", ls->size_major, ls->size_minor, ls->size_size);
 	ft_free_ls(ls);
 }

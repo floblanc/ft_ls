@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 23:33:11 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 11:57:22 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,30 @@ static char	*ft_device_minor_size(t_ls *ls, t_lf *file, char *tmp, char *nb)
 {
 	size_t j;
 	size_t size;
+	int		hex;
 
-	tmp[ls->size_major + ls->size_minor - file->sminor + 2] = 0;
-	if (!(nb = ft_itoa_unsigned_base(file->minor
-		, (file->minor < 200 ? 10 : 16), 0)))
+	hex = (file->minor >= 256 ? 1 : 0);
+	if (hex)
+		tmp[ls->size_major + hex + 2] = 0;
+	else
+		tmp[ls->size_major + ls->size_minor - file->sminor + 3 + hex] = 0;
+	// printf("3.5 - tmp = -|%s|-\n", tmp);
+	if (!(nb = ft_itoa_unsigned_base(file->minor , (hex ? 16 : 10), 0)))
 			ft_exit(2, 0);
-	if (file->minor >= 200)
+	if (hex == 1)
 	{
 		size = ft_strlen(nb);
-		j = ft_strlen(tmp);
+		j = ft_strlen(tmp) + 0;
 		tmp[j++] = '0';
 		tmp[j++] = 'x';
 		while (size++ < 8)
 			tmp[j++] = '0';
 		tmp[j] = 0;
 	}
+			// printf("4 - tmp = -|%s|-\n", tmp);
 	tmp = ft_strcat(tmp, nb);
+			// printf("5 - tmp = -|%s|-\n", tmp);
 	free(nb);
-	// printf("tmp = %s\n", tmp);
 	return (tmp);
 }
 
@@ -88,24 +94,30 @@ static void	ft_device_size(t_ls *ls)
 	size_t	i;
 	char	*nb = NULL;
 	char	*tmp = NULL;
+	int		hex;
 
 	i = 0;
-	// printf("-------------\n\n");
 	while (i < ls->nb_elem)
 	{
 		if ((ls->file[i]->st.st_mode & S_IFMT) == S_IFCHR
 			|| (ls->file[i]->st.st_mode & S_IFMT) == S_IFBLK)
 		{
-			// printf("value : major = %zu - minor = %zu\n", ls->file[i]->major, ls->file[i]->minor);
-			// printf("max size : major = %zu - minor = %zu\n", ls->size_major, ls->size_minor);
+			hex = (ls->file[i]->minor >= 256 ? 1 : 0);
+			// printf("minor = %zu\n", ls->file[i]->minor);
 			if (!(tmp = (char*)malloc(ls->size_major + ls->size_minor + 13))
 				|| !(nb = ft_itoa_unsigned(ls->file[i]->major)))
 				ft_exit(2, 0);
 			tmp = ft_memset(tmp, ' ', ls->size_major + ls->size_minor + 10);
-			tmp = ft_strcpy(&tmp[ls->size_major - ls->file[i]->smajor], nb);
-			tmp[ls->size_major] = ',';
+			tmp[ls->size_major - ls->file[i]->smajor + hex] = 0;
+			// printf("1 - tmp = -|%s|- %zu + %d\n", tmp, ls->size_major - ls->file[i]->smajor, hex);
+			tmp = ft_strcat(tmp, nb);
+			tmp[ls->size_major + hex] = ',';
+			// printf("2 - tmp = -|%s|-\n", tmp);
+			// tmp[ls->size_major + hex + 2] = 0;
+			// printf("3 - tmp = -|%s|-\n", tmp);
 			free(nb);
 			ls->file[i]->size = ft_device_minor_size(ls, ls->file[i], tmp, nb);
+			// printf("\n");
 		}
 		i++;
 	}
