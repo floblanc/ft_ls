@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 16:58:45 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:06:24 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static char	*ft_get_size(t_lf *file, size_t size, size_t flag)
 	char	*ret;
 
 	if (((file->st.st_mode & S_IFMT) == S_IFCHR
-			|| (file->st.st_mode & S_IFMT) == S_IFBLK))
-			return (NULL);
+		|| (file->st.st_mode & S_IFMT) == S_IFBLK))
+		return (NULL);
 	if (flag & HMIN && flag & LMIN)
 		return (ft_less_h_min("BKMGTPE", ret, 0, (int)size));
 	if (!(ret = ft_ulltoa(size)))

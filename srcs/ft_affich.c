@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 16:58:36 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:30:37 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,6 @@ static void	ft_free_ls(t_ls *ls)
 	ft_bzero(&ls->nb_elem, sizeof(size_t) * 9);
 }
 
-// b     Block special file.
-// c     Character special file.
-// d     Directory.
-// l     Symbolic link.
-// s     Socket link.
-// p     FIFO.
-// -     Regular file.
-
-// S_IFMT	0170000	masque du type de fichier
-// S_IFSOCK	0140000	socket
-// S_IFLNK	0120000	lien symbolique
-// S_IFREG	0100000	fichier ordinaire
-// S_IFBLK	0060000	périphérique blocs
-// S_IFDIR	0040000	répertoire
-// S_IFCHR	0020000	périphérique caractères
-// S_IFIFO	0010000	fifo
-
 static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2, size_t *f))
 {
 	size_t	i;
@@ -65,11 +48,10 @@ static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2, size_t *f))
 	{
 		best = pos;
 		i = pos + 1;
-		// printf("pos = %zu, ls->nb_elem %zu\n", pos, ls->nb_elem);
 		while (i < ls->nb_elem)
 		{
-			// printf("i = %zu\n", i);
-			if ((!(ls->flag & RMIN)) == !(cmp(ls->file[best], ls->file[i], &(ls->flag))))
+			if ((!(ls->flag & RMIN)) == !(cmp(ls->file[best]
+				, ls->file[i], &(ls->flag))))
 				best = i;
 			i++;
 		}
@@ -95,18 +77,10 @@ static void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
 			type[0] = '%';
 		else if ((mode & S_IFMT) == 0150000)
 			type[0] = '>';
-		// else if ((mode & S_IFMT) == S_IFDIR)
-		// 	type[0] = '/';
-		// else if ((mode & S_IFMT) == S_IFBLK)
-		// 	type[0] = '\0';
-		// else if ((mode & S_IFMT) == S_IFCHR)
-		// 	type[0] = '\0';
 		else if ((mode & S_IFMT) == S_IFIFO)
 			type[0] = '|';
 		else if (mode & S_IXUSR)
 			type[0] = '*';
-
-		//// % whiteout ?????????????????????
 	}
 	type[1] = '\0';
 }
@@ -120,7 +94,7 @@ static void	ft_print_data(t_ls *ls, t_lf *file, size_t f, int next)
 	int		go;
 
 	len = 0;
-	go = ((f & GMIN) == 0) + ((f & OMIN) == 0) * 2; // o = 1 / g = 2 / go = 0
+	go = ((f & GMIN) == 0) + ((f & OMIN) == 0) * 2;
 	if (f & LMIN)
 	{
 		ft_str_mode(mode, file->st.st_mode, file->pathname, file);
@@ -139,7 +113,7 @@ static void	ft_print_data(t_ls *ls, t_lf *file, size_t f, int next)
 		, " -> ", len, link, ((f & MMIN) && next ? ", " : "\n"));
 }
 
-void	ft_affich(t_ls *ls)
+void		ft_affich(t_ls *ls)
 {
 	size_t	i;
 

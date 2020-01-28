@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 16:58:49 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:40:16 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 	}
 	if (nb == 0)
 		ls->to_read[nb] = ft_strdup(".");
+	if (size > 1)
+		ft_printf("%s:\n", ls->to_read[0]);
 }
 
 static void		ft_chose_flag(char letter, size_t *flag)
@@ -79,6 +81,7 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 
 	i = 1;
 	size = 0;
+	ft_bzero(&ls, sizeof(t_ls));
 	while (i < argc)
 	{
 		if (argv[i][0] == '-')

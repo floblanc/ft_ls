@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/28 16:39:15 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:42:49 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 // # include "../libftprintf/include/libprintf.h"
 #include "../libft/libft.h"
 #include <sys/acl.h>
+#include <errno.h>
+#include <string.h>
 
 # define AMAJ 0x00000001
 # define FMAJ 0x00000002

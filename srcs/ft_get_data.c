@@ -6,17 +6,18 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 16:58:41 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:27:38 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-static void ft_acl(char src[12], char *pathname,  mode_t mode, t_lf *file)
+static void	ft_acl(char src[12], char *pathname, mode_t mode, t_lf *file)
 {
-	acl_t		acl = NULL;
+	acl_t		acl;
 	acl_entry_t	dummy;
 
+	acl = NULL;
 	if ((file->st.st_mode & S_ISUID))
 		src[3] = ((mode & (1 << 6)) != 0 ? 's' : 'S');
 	else if ((file->st.st_mode & S_ISGID))
@@ -36,14 +37,14 @@ static void ft_acl(char src[12], char *pathname,  mode_t mode, t_lf *file)
 	src[11] = '\0';
 }
 
-void	ft_str_mode(char src[12], mode_t mode, char *pathname, t_lf *file)
+void		ft_str_mode(char src[12], mode_t mode, char *pathname, t_lf *file)
 {
 	mode_t		tmp;
 	static char	str[] = "rwxrwxrwx";
 	size_t		i;
 
 	i = 0;
-	tmp = mode & S_IFMT; 
+	tmp = mode & S_IFMT;
 	if (tmp == S_IFSOCK)
 		src[0] = 's';
 	else if (tmp == S_IFLNK)
@@ -66,8 +67,8 @@ void	ft_str_mode(char src[12], mode_t mode, char *pathname, t_lf *file)
 
 static char	*ft_device_minor_size(t_ls *ls, t_lf *file, char *tmp, char *nb)
 {
-	size_t j;
-	size_t size;
+	size_t	j;
+	size_t	size;
 	int		hex;
 
 	hex = (file->minor >= 256 ? 1 : 0);
@@ -75,9 +76,8 @@ static char	*ft_device_minor_size(t_ls *ls, t_lf *file, char *tmp, char *nb)
 		tmp[ls->size_major + hex + 2] = 0;
 	else
 		tmp[ls->size_major + ls->size_minor - file->sminor + 3 + hex] = 0;
-	// printf("3.5 - tmp = -|%s|-\n", tmp);
-	if (!(nb = ft_itoa_unsigned_base(file->minor , (hex ? 16 : 10), 0)))
-			ft_exit(2, 0);
+	if (!(nb = ft_itoa_unsigned_base(file->minor, (hex ? 16 : 10), 0)))
+		ft_exit(2, 0);
 	if (hex == 1)
 	{
 		size = ft_strlen(nb);
@@ -88,9 +88,7 @@ static char	*ft_device_minor_size(t_ls *ls, t_lf *file, char *tmp, char *nb)
 			tmp[j++] = '0';
 		tmp[j] = 0;
 	}
-			// printf("4 - tmp = -|%s|-\n", tmp);
 	tmp = ft_strcat(tmp, nb);
-			// printf("5 - tmp = -|%s|-\n", tmp);
 	free(nb);
 	return (tmp);
 }
@@ -109,27 +107,21 @@ static void	ft_device_size(t_ls *ls)
 			|| (ls->file[i]->st.st_mode & S_IFMT) == S_IFBLK)
 		{
 			hex = (ls->file[i]->minor >= 256 ? 1 : 0);
-			// printf("minor = %zu\n", ls->file[i]->minor);
 			if (!(tmp = (char*)malloc(ls->size_major + ls->size_minor + 13))
 				|| !(nb = ft_itoa_unsigned(ls->file[i]->major)))
 				ft_exit(2, 0);
 			tmp = ft_memset(tmp, ' ', ls->size_major + ls->size_minor + 10);
 			tmp[ls->size_major - ls->file[i]->smajor + hex] = 0;
-			// printf("1 - tmp = -|%s|- %zu + %d\n", tmp, ls->size_major - ls->file[i]->smajor, hex);
 			tmp = ft_strcat(tmp, nb);
 			tmp[ls->size_major + hex] = ',';
-			// printf("2 - tmp = -|%s|-\n", tmp);
-			// tmp[ls->size_major + hex + 2] = 0;
-			// printf("3 - tmp = -|%s|-\n", tmp);
 			free(nb);
 			ls->file[i]->size = ft_device_minor_size(ls, ls->file[i], tmp, nb);
-			// printf("\n");
 		}
 		i++;
 	}
 }
 
-void	ft_long_format(t_ls *ls)
+void		ft_long_format(t_ls *ls)
 {
 	struct stat st;
 	size_t		i;
