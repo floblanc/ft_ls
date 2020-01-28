@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/28 14:01:49 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:39:15 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,19 @@
 # define CMIN 0x00000080
 # define DMIN 0x00000100
 # define FMIN 0x00000200
-# define HMIN 0x00000400
-# define IMIN 0x00000800
-# define LMIN 0x00001000
-# define NMIN 0x00002000
-# define OMIN 0x00004000
-# define PMIN 0x00008000
-# define RMIN 0x00010000
-# define SMIN 0x00020000
-# define TMIN 0x00040000
-# define UMIN 0x00080000
-# define FLAGS "AFRSTUacdfhilnoprstu"
+# define GMIN 0x00000400
+# define HMIN 0x00000800
+# define IMIN 0x00001000
+# define LMIN 0x00002000
+# define MMIN 0x00004000
+# define NMIN 0x00008000
+# define OMIN 0x00010000
+# define PMIN 0x00020000
+# define RMIN 0x00040000
+# define SMIN 0x00080000
+# define TMIN 0x00100000
+# define UMIN 0x00200000
+# define FLAGS "AFRSTUacdfghilmnoprstu"
 
 // LMIN SMIN SMAJ TMIN FMAJ PMIN RMAJ
 
@@ -121,6 +123,7 @@ typedef struct		s_ls
 	char			**to_read;
 
 	size_t			nb_elem;
+	size_t			size_ino;
 	size_t			size_block;
 	size_t			size_link;
 	size_t			size_user;
@@ -158,7 +161,7 @@ size_t	ft_dir_size(char *path);
 
 void	ft_get_user_grp(t_ls *ls, struct stat st, t_lf *file);
 
-void	ft_str_mode(char src[12], mode_t mode, char *pathname);
+void	ft_str_mode(char src[12], mode_t mode, char *pathname, t_lf *file);
 
 #endif
 

@@ -6,17 +6,23 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 13:57:25 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:55:54 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-static void ft_acl(char src[12], char *pathname)
+static void ft_acl(char src[12], char *pathname,  mode_t mode, t_lf *file)
 {
 	acl_t		acl = NULL;
 	acl_entry_t	dummy;
 
+	if ((file->st.st_mode & S_ISUID))
+		src[3] = ((mode & (1 << 6)) != 0 ? 's' : 'S');
+	else if ((file->st.st_mode & S_ISGID))
+		src[6] = ((mode & (1 << 3)) != 0 ? 's' : 'S');
+	else if ((file->st.st_mode & S_ISVTX))
+		src[9] = ((mode & 1) != 0 ? 't' : 'T');
 	acl = acl_get_link_np(pathname, ACL_TYPE_EXTENDED);
 	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &dummy) == -1)
 	{
@@ -30,12 +36,13 @@ static void ft_acl(char src[12], char *pathname)
 	src[11] = '\0';
 }
 
-void	ft_str_mode(char src[12], mode_t mode, char *pathname)
+void	ft_str_mode(char src[12], mode_t mode, char *pathname, t_lf *file)
 {
-	static char	str[] = "rwxrwxrwx";
-	int			i;
 	mode_t		tmp;
+	static char	str[] = "rwxrwxrwx";
+	size_t		i;
 
+	i = 0;
 	tmp = mode & S_IFMT; 
 	if (tmp == S_IFSOCK)
 		src[0] = 's';
@@ -51,11 +58,10 @@ void	ft_str_mode(char src[12], mode_t mode, char *pathname)
 		src[0] = 'c';
 	else if (tmp == S_IFIFO)
 		src[0] = 'p';
-	i = 0;
+	src[10] = ' ';
 	while (++i < 10)
 		src[i] = (mode & (1 << (9 - i))) ? str[i - 1] : '-';
-	src[10] = ' ';
-	ft_acl(src, pathname);
+	ft_acl(src, pathname, mode, file);
 }
 
 static char	*ft_device_minor_size(t_ls *ls, t_lf *file, char *tmp, char *nb)
@@ -145,6 +151,7 @@ void	ft_long_format(t_ls *ls)
 		}
 		ls->size_block = ft_nbrlen_unsigned(ls->size_block);
 		ls->size_link = ft_nbrlen_unsigned(ls->size_link);
+		ls->size_ino = ft_nbrlen_unsigned(ls->size_ino);
 		ft_device_size(ls);
 	}
 	ft_affich(ls);

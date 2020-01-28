@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 11:42:51 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/28 14:29:17 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,24 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 		ls->to_read[nb] = ft_strdup(".");
 }
 
+static void		ft_chose_flag(char letter, size_t *flag)
+{
+	if (letter == 'p')
+		*flag &= (0xFFFFFFFF - FMAJ);
+	else if (letter == 'F')
+		*flag &= (0xFFFFFFFF - PMIN);
+	else if (letter == 'l')
+		*flag &= (0xFFFFFFFF - MMIN);
+	else if (letter == 'm')
+		*flag &= (0xFFFFFFFF - LMIN);
+	else if (letter == 'U')
+		*flag &= (0xFFFFFFFF - (UMIN + CMIN));
+	else if (letter == 'u')
+		*flag &= (0xFFFFFFFF - (UMAJ + CMIN));
+	else if (letter == 'c')
+		*flag &= (0xFFFFFFFF - (UMIN + UMAJ));
+}
+
 static int		flag_stocker(char letter, size_t *flag)
 {
 	int	i;
@@ -45,16 +63,7 @@ static int		flag_stocker(char letter, size_t *flag)
 		if (FLAGS[i] == letter)
 		{
 			*flag |= (size_t)ft_pow(2, i);
-			if (FLAGS[i] == 'p')
-				*flag &= (0xFFFFFFFF - FMAJ);
-			else if (FLAGS[i] == 'F')
-				*flag &= (0xFFFFFFFF - PMIN);
-			else if (FLAGS[i] == 'U')
-				*flag &= (0xFFFFFFFF - (UMIN + CMIN));
-			else if (FLAGS[i] == 'u')
-				*flag &= (0xFFFFFFFF - (UMAJ + CMIN));
-			else if (FLAGS[i] == 'c')
-				*flag &= (0xFFFFFFFF - (UMIN + UMAJ));
+			ft_chose_flag(letter, flag);
 			return (1);
 		}
 		i++;
@@ -83,7 +92,7 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 			size++;
 		i++;
 	}
-	if (ls->flag & OMIN || ls->flag & NMIN)
+	if (ls->flag & OMIN || ls->flag & NMIN || ls->flag & GMIN)
 		ls->flag |= LMIN;
 	if (ls->flag & FMIN)
 		ls->flag |= AMIN;

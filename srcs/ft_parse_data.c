@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 13:57:20 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:41:55 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,8 @@ void		ft_get_user_grp(t_ls *ls, struct stat st, t_lf *file)
 		if ((user = getpwuid(file->st.st_uid)) != NULL)
 			file->user = ft_strdup(user->pw_name);
 		if ((ls->flag & OMIN) == 0)
-		{
 			if ((grp = getgrgid(file->st.st_gid)) != NULL)
 				file->grp = ft_strdup(grp->gr_name);
-		}
 	}
 	if ((ls->flag & OMIN) == 0 && file->grp == NULL)
 		file->grp = ft_itoa((int)file->st.st_gid);
@@ -129,5 +127,7 @@ void		ft_get_user_grp(t_ls *ls, struct stat st, t_lf *file)
 		file->user = ft_itoa((int)file->st.st_uid);
 	file->major = (size_t)file->st.st_rdev >> 24;
 	file->minor = (size_t)file->st.st_rdev & 0xFFFFFF;
+	if (ls->size_ino < file->st.st_ino)
+		ls->size_ino = file->st.st_ino;
 	ft_get_maxsize(ls, file);
 }
