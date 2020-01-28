@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 12:22:58 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:04:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ static char	*ft_get_date(t_lf *file, size_t *flag)
 	tmp = ctime(&date);
 	if (!(ret = ft_strdup(&tmp[4])))
 		ft_exit(2, 0);
-	if (!(diff <= 0 && diff > -15552000))
+	if (!(diff <= 0 && diff > -15552000) && !(*flag & TMAJ))
 		ft_strcpy(&(ret[7]), &(ret[15]));
-	ret[12] = 0;
+	ret[(*flag & TMAJ ? 20 : 12)] = 0;
 	return (ret);
 }
 
