@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/27 23:30:37 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:50:09 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,21 @@
 # define FMAJ 2
 # define RMAJ 4
 # define SMAJ 8
-# define AMIN 16
-# define DMIN 32
-# define HMIN 64
-# define LMIN 128
-# define NMIN 256
-# define OMIN 512
-# define PMIN 1024
-# define RMIN 2048
-# define SMIN 4096
-# define TMIN 8192
-# define FLAGS "AFRSadhlnoprst"
+# define UMAJ 16
+# define AMIN 32
+# define CMIN 64
+# define DMIN 128
+# define FMIN 256
+# define HMIN 512
+# define LMIN 1024
+# define NMIN 2048
+# define OMIN 4096
+# define PMIN 8192
+# define RMIN 16384
+# define SMIN 32768
+# define TMIN 65536
+# define UMIN 131072
+# define FLAGS "AFRSUacdfhlnoprstu"
 
 // LMIN SMIN SMAJ TMIN FMAJ PMIN RMAJ
 
@@ -136,11 +140,11 @@ void	ft_exit(int mode, char c);
 
 void	ft_affich(t_ls *ls);
 
-int		ft_ascii_cmp(t_lf *f1, t_lf *f2);
+int		ft_ascii_cmp(t_lf *f1, t_lf *f2, size_t *flag);
 
-int		ft_less_s_maj_cmp(t_lf *f1, t_lf *f2);
+int		ft_less_s_maj_cmp(t_lf *f1, t_lf *f2, size_t *flag);
 
-int		ft_less_t_cmp(t_lf *f1, t_lf *f2);
+int		ft_less_t_cmp(t_lf *f1, t_lf *f2, size_t *flag);
 
 char	*ft_create_path(char *path, char *file);
 

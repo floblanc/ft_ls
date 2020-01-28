@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/27 23:33:11 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 10:34:34 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ft_long_format(t_ls *ls)
 	if (ls->flag & LMIN || ls->flag & SMIN || ls->flag & SMAJ || ls->flag & TMIN
 		|| ls->flag & FMAJ || ls->flag & PMIN || ls->flag & RMAJ)
 	{
-		while (i < ls->nb_elem)	
+		while (i < ls->nb_elem)
 		{
 			if (lstat(ls->file[i]->pathname, &st) == -1)
 			{
