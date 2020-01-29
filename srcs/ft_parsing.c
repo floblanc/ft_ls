@@ -3,27 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 22:59:59 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 13:49:02 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
+void			ft_sort_to_read(t_ls *ls)
+{
+	size_t i;
+
+	i = 0;
+	if (ls->nb_dir == 0 && ls->nb_file == 0)
+		ls->dir_read[ls->nb_dir++] = ft_strdup(".");
+	if (ls->nb_dir)
+	{
+		if (!(ls->current_path = ft_strdup("."))
+			|| !(ls->file = (t_lf**)ft_memalloc(8 * (size_t)(ls->nb_dir + 1))))
+			ft_exit(2, 0);
+		while (ls->dir_read[i])
+		{
+			ft_new_file(ls, ls->dir_read[i]);
+			ft_strdel(&ls->dir_read[i++]);
+		}
+		ft_long_format(ls, 0);
+		i = 0;
+		while (i < ls->nb_dir)
+		{
+			ls->dir_read[i] = ft_strdup(ls->file[i]->name);
+			i++;
+		}
+		ft_free_ls(ls);
+	}
+}
+
 static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 {
 	int			i;
-	int			file;
-	int			dir;
 	struct stat st;
 
 	i = 1;
-	dir = 0;
-	file = 0;
-	if (size == 0)
-		size = 1;
 	if (!(ls->dir_read = (char**)ft_memalloc(8 * (size_t)(size + 1)))
 		|| !(ls->file_read = (char**)ft_memalloc(8 * (size_t)(size + 1))))
 		ft_exit(2, 0);
@@ -32,21 +54,19 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 		if (argv[i][0] != '-')
 		{
 			if (lstat(argv[i], &st) == -1)
-				ft_printf("lstat : parsing ft_ls: %s: %s\n", argv[i], strerror(errno));
+				ft_printf("lstat : parsing ft_ls: %s: %s\n", argv[i]
+					, strerror(errno));
 			else
 			{
 				if ((st.st_mode & S_IFMT) == S_IFDIR)
-					ls->dir_read[dir++] = ft_strdup(argv[i]);
+					ls->dir_read[ls->nb_dir++] = ft_strdup(argv[i]);
 				else
-					ls->file_read[file++] = ft_strdup(argv[i]);
+					ls->file_read[ls->nb_file++] = ft_strdup(argv[i]);
 			}
 		}
 		i++;
 	}
-	if (dir < 0)
-		ls->dir_read[dir] = ft_strdup(".");
-	// if (size > 1 && dir > 0)
-		// ft_printf("%s:\n", ls->dir_read[0]);
+	ft_sort_to_read(ls);
 }
 
 static void		ft_chose_flag(char letter, size_t *flag)
@@ -112,5 +132,5 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 		ls->flag |= LMIN;
 	if (ls->flag & FMIN)
 		ls->flag |= AMIN;
-	ft_get_to_read(ls, size, argc, argv);
+	ft_get_to_read(ls, (size == 0 ? 1 : size), argc, argv);
 }

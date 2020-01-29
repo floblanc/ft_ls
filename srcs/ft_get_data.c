@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 21:24:45 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 13:19:59 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,15 @@ static char	*ft_device_minor_size(t_ls *ls, t_lf *file, char *tmp, char *nb)
 	return (tmp);
 }
 
-static void	ft_device_size(t_ls *ls)
+static void	ft_device_size(t_ls *ls, size_t i)
 {
-	size_t	i;
 	char	*nb;
 	char	*tmp;
 	int		hex;
 
-	i = 0;
+	ls->size_block = ft_nbrlen_unsigned(ls->size_block);
+	ls->size_link = ft_nbrlen_unsigned(ls->size_link);
+	ls->size_ino = ft_nbrlen_unsigned(ls->size_ino);
 	while (i < ls->nb_elem)
 	{
 		if ((ls->file[i]->st.st_mode & S_IFMT) == S_IFCHR
@@ -121,7 +122,7 @@ static void	ft_device_size(t_ls *ls)
 	}
 }
 
-void		ft_long_format(t_ls *ls)
+void		ft_long_format(t_ls *ls, int mode)
 {
 	struct stat st;
 	size_t		i;
@@ -133,16 +134,19 @@ void		ft_long_format(t_ls *ls)
 		while (i < ls->nb_elem)
 		{
 			if (lstat(ls->file[i]->pathname, &st) == -1)
-				ft_printf("ft_ls: %s: %s\n", ls->file[i]->name
-					, strerror(errno));
+				ft_printf("ft_ls: %s: %s\n"
+					, ls->file[i++]->name, strerror(errno));
 			else
-				ft_get_user_grp(ls, st, ls->file[i]);
-			i++;
+				ft_get_user_grp(ls, st, ls->file[i++]);
 		}
-		ls->size_block = ft_nbrlen_unsigned(ls->size_block);
-		ls->size_link = ft_nbrlen_unsigned(ls->size_link);
-		ls->size_ino = ft_nbrlen_unsigned(ls->size_ino);
-		ft_device_size(ls);
+		ft_device_size(ls, 0);
 	}
-	ft_affich(ls);
+	if (ls->flag & SMAJ)
+		ft_select_sort(ls, &ft_less_s_maj_cmp);
+	else if (ls->flag & TMIN)
+		ft_select_sort(ls, &ft_less_t_cmp);
+	else
+		ft_select_sort(ls, &ft_ascii_cmp);
+	if (mode)
+		ft_affich(ls);
 }

@@ -6,13 +6,13 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 17:30:37 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 13:25:23 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-static void	ft_free_ls(t_ls *ls)
+void		ft_free_ls(t_ls *ls)
 {
 	size_t i;
 
@@ -31,10 +31,10 @@ static void	ft_free_ls(t_ls *ls)
 	}
 	free(ls->file);
 	ls->file = NULL;
-	ft_bzero(&ls->nb_elem, sizeof(size_t) * 9);
+	ft_bzero(&ls->nb_elem, sizeof(size_t) * 10);
 }
 
-static void	ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2, size_t *f))
+void		ft_select_sort(t_ls *ls, int (*cmp)(t_lf *f1, t_lf *f2, size_t *f))
 {
 	size_t	i;
 	size_t	best;
@@ -118,12 +118,6 @@ void		ft_affich(t_ls *ls)
 	size_t	i;
 
 	i = 0;
-	if (ls->flag & SMAJ)
-		ft_select_sort(ls, &ft_less_s_maj_cmp);
-	else if (ls->flag & TMIN)
-		ft_select_sort(ls, &ft_less_t_cmp);
-	else
-		ft_select_sort(ls, &ft_ascii_cmp);
 	if (ls->nb_elem && (ls->flag & SMIN || ls->flag & LMIN))
 		ft_printf("total %zu\n", ls->total_block);
 	while (i < ls->nb_elem)

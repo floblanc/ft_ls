@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/28 23:00:32 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 13:49:15 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		ft_exit(int mode, char c)
 	exit(mode);
 }
 
-static void	ft_new_file(t_ls *ls, char *name)
+void		ft_new_file(t_ls *ls, char *name)
 {
 	t_lf	**tmp;
 	size_t	i;
@@ -57,7 +57,27 @@ void		ft_read_dir(t_ls *ls, char *path, int size)
 		}
 		closedir(rep);
 	}
-	ft_long_format(ls);
+	ft_long_format(ls, 1);
+}
+
+void		ft_read_file(t_ls *ls)
+{
+	size_t i;
+
+	i = 0;
+	if (ls->nb_file)
+	{
+		if (!(ls->current_path = ft_strdup("."))
+			|| !(ls->file = (t_lf**)ft_memalloc(8 * (size_t)(ls->nb_file + 1))))
+			ft_exit(2, 0);
+		while (ls->file_read[i])
+		{
+			ft_new_file(ls, ls->file_read[i]);
+			free(ls->file_read[i++]);
+		}
+		ft_long_format(ls, 1);
+		free(ls->file_read);
+	}
 }
 
 int			main(int argc, char **argv)
@@ -67,20 +87,12 @@ int			main(int argc, char **argv)
 
 	i = 0;
 	ft_get_flag(&ls, argc, argv);
+	ft_read_file(&ls);
 	while (ls.dir_read[i])
 	{
-		if (i != 0)
+		if (ls.nb_file > 0 || i > 0 || ls.dir_read[i + 1])
 			ft_printf("\n%s:\n", ls.dir_read[i]);
-		if (!(ls.flag & DMIN))
-			ft_read_dir(&ls, ls.dir_read[i], ft_dir_size(ls.dir_read[i]));
-		else
-		{
-			if (!(ls.file = (t_lf**)ft_memalloc(sizeof(t_lf*) * 2))
-				|| !(ls.current_path = ft_strdup(".")))
-				ft_exit(2, 0);
-			ft_new_file(&ls, ls.dir_read[i]);
-			ft_long_format(&ls);
-		}
+		ft_read_dir(&ls, ls.dir_read[i], ft_dir_size(ls.dir_read[i]));
 		free(ls.dir_read[i++]);
 	}
 	free(ls.dir_read);
