@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 17:27:38 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 21:24:45 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ void		ft_long_format(t_ls *ls)
 		while (i < ls->nb_elem)
 		{
 			if (lstat(ls->file[i]->pathname, &st) == -1)
-				perror("perror ft_long_format -> ft_ls ");
+				ft_printf("ft_ls: %s: %s\n", ls->file[i]->name
+					, strerror(errno));
 			else
 				ft_get_user_grp(ls, st, ls->file[i]);
 			i++;

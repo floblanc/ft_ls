@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/28 17:42:49 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 22:53:05 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ typedef struct		s_lf
 typedef struct		s_ls
 {
 	size_t			flag;
-	char			**to_read;
+	char			**dir_read;
+	char			**file_read;
 
 	size_t			nb_elem;
 	size_t			size_ino;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 17:40:16 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 22:59:59 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,39 @@
 
 static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 {
-	int i;
-	int nb;
+	int			i;
+	int			file;
+	int			dir;
+	struct stat st;
 
 	i = 1;
-	nb = 0;
+	dir = 0;
+	file = 0;
 	if (size == 0)
 		size = 1;
-	if (!(ls->to_read = (char**)malloc((sizeof(char*) * (size_t)(size + 1)))))
+	if (!(ls->dir_read = (char**)ft_memalloc(8 * (size_t)(size + 1)))
+		|| !(ls->file_read = (char**)ft_memalloc(8 * (size_t)(size + 1))))
 		ft_exit(2, 0);
-	ls->to_read[size] = NULL;
 	while (i < argc)
 	{
 		if (argv[i][0] != '-')
-			ls->to_read[nb++] = ft_strdup(argv[i]);
+		{
+			if (lstat(argv[i], &st) == -1)
+				ft_printf("lstat : parsing ft_ls: %s: %s\n", argv[i], strerror(errno));
+			else
+			{
+				if ((st.st_mode & S_IFMT) == S_IFDIR)
+					ls->dir_read[dir++] = ft_strdup(argv[i]);
+				else
+					ls->file_read[file++] = ft_strdup(argv[i]);
+			}
+		}
 		i++;
 	}
-	if (nb == 0)
-		ls->to_read[nb] = ft_strdup(".");
-	if (size > 1)
-		ft_printf("%s:\n", ls->to_read[0]);
+	if (dir < 0)
+		ls->dir_read[dir] = ft_strdup(".");
+	// if (size > 1 && dir > 0)
+		// ft_printf("%s:\n", ls->dir_read[0]);
 }
 
 static void		ft_chose_flag(char letter, size_t *flag)
@@ -81,7 +94,7 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 
 	i = 1;
 	size = 0;
-	ft_bzero(&ls, sizeof(t_ls));
+	ft_bzero(ls, sizeof(t_ls));
 	while (i < argc)
 	{
 		if (argv[i][0] == '-')

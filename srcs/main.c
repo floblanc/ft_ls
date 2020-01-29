@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/28 17:43:04 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/28 23:00:32 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		ft_read_dir(t_ls *ls, char *path, int size)
 		ft_exit(2, 0);
 	ls->current_path = path;
 	if ((rep = opendir(ls->current_path)) == NULL)
-		perror("perror ft_read_dir -> ft_ls ");
+		ft_printf("ft_ls: %s: %s\n", ls->current_path, strerror(errno));
 	else
 	{
 		while ((dir = readdir(rep)) != NULL)
@@ -63,29 +63,26 @@ void		ft_read_dir(t_ls *ls, char *path, int size)
 int			main(int argc, char **argv)
 {
 	t_ls		ls;
-	struct stat st;
 	size_t		i;
 
 	i = 0;
 	ft_get_flag(&ls, argc, argv);
-	while (ls.to_read[i])
+	while (ls.dir_read[i])
 	{
 		if (i != 0)
-			ft_printf("\n%s:\n", ls.to_read[i]);
-		if (lstat(ls.to_read[i], &st) == -1)
-			ft_printf("ft_ls: %s: %s\n", ls.to_read[i], strerror(errno));
-		else if (((st.st_mode & S_IFMT) == S_IFDIR) && !(ls.flag & DMIN))
-			ft_read_dir(&ls, ls.to_read[i], ft_dir_size(ls.to_read[i]));
+			ft_printf("\n%s:\n", ls.dir_read[i]);
+		if (!(ls.flag & DMIN))
+			ft_read_dir(&ls, ls.dir_read[i], ft_dir_size(ls.dir_read[i]));
 		else
 		{
 			if (!(ls.file = (t_lf**)ft_memalloc(sizeof(t_lf*) * 2))
 				|| !(ls.current_path = ft_strdup(".")))
 				ft_exit(2, 0);
-			ft_new_file(&ls, ls.to_read[i]);
+			ft_new_file(&ls, ls.dir_read[i]);
 			ft_long_format(&ls);
 		}
-		free(ls.to_read[i++]);
+		free(ls.dir_read[i++]);
 	}
-	free(ls.to_read);
+	free(ls.dir_read);
 	return (0);
 }
