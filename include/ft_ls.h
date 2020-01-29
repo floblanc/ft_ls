@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/29 13:27:58 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 15:33:02 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv);
 
 void			ft_exit(int mode, char c);
 
-void			ft_affich(t_ls *ls);
+void			ft_affich(t_ls *ls, int mode);
 
 int				ft_ascii_cmp(t_lf *f1, t_lf *f2, size_t *flag);
 

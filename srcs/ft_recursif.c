@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/28 17:07:37 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 14:52:20 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*ft_create_path(char *path, char *file)
 	size_t	j;
 
 	i = 0;
+	if (file[0] == '/')
+		return (ft_strdup(file));
 	size_a = ft_strlen(path);
 	size_b = ft_strlen(file);
 	if (!(new = (char*)malloc(sizeof(char) * (size_a + size_b + 2))))

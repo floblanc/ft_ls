@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/01/29 13:49:15 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 16:12:31 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		ft_read_file(t_ls *ls)
 			ft_new_file(ls, ls->file_read[i]);
 			free(ls->file_read[i++]);
 		}
-		ft_long_format(ls, 1);
+		ft_long_format(ls, 2);
 		free(ls->file_read);
 	}
 }

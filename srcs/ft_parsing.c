@@ -6,18 +6,18 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/29 13:49:02 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 16:12:52 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-void			ft_sort_to_read(t_ls *ls)
+static void		ft_sort_to_read(t_ls *ls, int try)
 {
 	size_t i;
 
 	i = 0;
-	if (ls->nb_dir == 0 && ls->nb_file == 0)
+	if (try == 0)
 		ls->dir_read[ls->nb_dir++] = ft_strdup(".");
 	if (ls->nb_dir)
 	{
@@ -42,31 +42,29 @@ void			ft_sort_to_read(t_ls *ls)
 
 static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 {
-	int			i;
+	size_t		i;
 	struct stat st;
+	int			try;
 
-	i = 1;
+	i = 0;
+	try = 0;
 	if (!(ls->dir_read = (char**)ft_memalloc(8 * (size_t)(size + 1)))
 		|| !(ls->file_read = (char**)ft_memalloc(8 * (size_t)(size + 1))))
 		ft_exit(2, 0);
-	while (i < argc)
+	while (++i < argc)
 	{
 		if (argv[i][0] != '-')
 		{
+			try++;
 			if (lstat(argv[i], &st) == -1)
-				ft_printf("lstat : parsing ft_ls: %s: %s\n", argv[i]
-					, strerror(errno));
-			else
-			{
-				if ((st.st_mode & S_IFMT) == S_IFDIR)
+				ft_printf("ft_ls: %s: %s\n", argv[i], strerror(errno));
+			else if ((st.st_mode & S_IFMT) == S_IFDIR && !(ls->flag & DMIN))
 					ls->dir_read[ls->nb_dir++] = ft_strdup(argv[i]);
-				else
-					ls->file_read[ls->nb_file++] = ft_strdup(argv[i]);
-			}
+			else
+				ls->file_read[ls->nb_file++] = ft_strdup(argv[i]);
 		}
-		i++;
 	}
-	ft_sort_to_read(ls);
+	ft_sort_to_read(ls, try);
 }
 
 static void		ft_chose_flag(char letter, size_t *flag)

@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/29 13:25:23 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 15:32:51 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,12 @@ static void	ft_print_data(t_ls *ls, t_lf *file, size_t f, int next)
 		, " -> ", len, link, ((f & MMIN) && next ? ", " : "\n"));
 }
 
-void		ft_affich(t_ls *ls)
+void		ft_affich(t_ls *ls, int mode)
 {
 	size_t	i;
 
 	i = 0;
-	if (ls->nb_elem && (ls->flag & SMIN || ls->flag & LMIN))
+	if (mode != 2 && ls->nb_elem && (ls->flag & SMIN || ls->flag & LMIN))
 		ft_printf("total %zu\n", ls->total_block);
 	while (i < ls->nb_elem)
 	{

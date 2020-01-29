@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/29 13:19:59 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/01/29 15:53:35 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,5 @@ void		ft_long_format(t_ls *ls, int mode)
 	else
 		ft_select_sort(ls, &ft_ascii_cmp);
 	if (mode)
-		ft_affich(ls);
+		ft_affich(ls, mode);
 }
