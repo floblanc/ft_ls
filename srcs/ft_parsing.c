@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/29 16:12:52 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:43:41 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 			if (lstat(argv[i], &st) == -1)
 				ft_printf("ft_ls: %s: %s\n", argv[i], strerror(errno));
 			else if ((st.st_mode & S_IFMT) == S_IFDIR && !(ls->flag & DMIN))
-					ls->dir_read[ls->nb_dir++] = ft_strdup(argv[i]);
+				ls->dir_read[ls->nb_dir++] = ft_strdup(argv[i]);
 			else
 				ls->file_read[ls->nb_file++] = ft_strdup(argv[i]);
 		}
@@ -90,7 +90,6 @@ static int		flag_stocker(char letter, size_t *flag)
 	int	i;
 
 	i = 0;
-	*flag |= CMIN;
 	while (FLAGS[i])
 	{
 		if (FLAGS[i] == letter)
