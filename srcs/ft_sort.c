@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sort.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:27:27 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/29 15:53:39 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/03 14:42:20 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int		ft_ascii_cmp(t_lf *f1, t_lf *f2, size_t *flag)
 {
 	(void)flag;
+	if ((f1->st.st_mode & S_IFMT) == S_IFLNK)
+		printf("f1 = %s | f2 = %s\n",f1->name, f2->name);
 	return ((ft_strcmp(f1->name, f2->name)) <= 0);
 }
 

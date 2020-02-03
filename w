@@ -1,14 +1,109 @@
-total 18168
--rw-r--r--  1 floblanc  2018_paris     1418 Jan 30 15:34 w
--rw-r--r--  1 floblanc  2018_paris     1418 Jan 30 15:34 z
--rw-r--r--  1 floblanc  2018_paris        0 Jan 30 15:23 lienS
-lrwxr-xr-x  1 floblanc  2018_paris        6 Jan 30 15:22 test3 -> auteur
-lrwxr-xr-x  1 floblanc  2018_paris        6 Jan 30 15:22 test4 -> auteur
--rw-r--r--  1 floblanc  2018_paris        0 Jan 30 15:14 teslien
-drwxr-xr-x  7 floblanc  2018_paris      238 Jan 30 14:06 a
-lrwxr-xr-x  1 floblanc  2018_paris        8 Jan 30 14:06 test2lien -> testlien
--rw-r--r--  1 floblanc  2018_paris  2516846 Jan 30 14:06 znctions
--rwxr-xr-x  1 floblanc  2018_paris  6750018 Jan 29 14:09 Oct 23 17:20:41 201.tga
--rw-r--r--  1 floblanc  2018_paris      165 Jan 29 14:09 lire le fichier
--rw-r--r--  1 floblanc  2018_paris      111 Jan 29 14:09 t.c
-lrwxr-xr-x  1 floblanc  2018_paris        5 Jan 29 14:09 testlien -> lienS
+total 40
+lrwxr-xr-x  1 root  wheel      9 Dec 10 15:13 autoload -> functions
+lrwxr-xr-x  1 root  wheel      4 Dec 10 15:13 bye -> exit
+lrwxr-xr-x  1 root  wheel      2 Dec 10 15:13 chdir -> cd
+lrwxr-xr-x  1 root  wheel      7 Dec 10 15:13 declare -> typeset
+lrwxr-xr-x  1 root  wheel      7 Dec 10 15:13 float -> typeset
+lrwxr-xr-x  1 root  wheel      2 Dec 10 15:13 history -> fc
+lrwxr-xr-x  1 root  wheel      7 Dec 10 15:13 integer -> typeset
+lrwxr-xr-x  1 root  wheel      7 Dec 10 15:13 local -> typeset
+lrwxr-xr-x  1 root  wheel      4 Dec 10 15:13 logout -> exit
+lrwxr-xr-x  1 root  wheel      5 Dec 10 15:13 pushln -> print
+lrwxr-xr-x  1 root  wheel      2 Dec 10 15:13 r -> fc
+lrwxr-xr-x  1 root  wheel      7 Dec 10 15:13 readonly -> typeset
+lrwxr-xr-x  1 root  wheel      4 Dec 10 15:13 rehash -> hash
+lrwxr-xr-x  1 root  wheel      6 Dec 10 15:13 type -> whence
+lrwxr-xr-x  1 root  wheel      6 Dec 10 15:13 unalias -> unhash
+lrwxr-xr-x  1 root  wheel      6 Dec 10 15:13 unfunction -> unhash
+lrwxr-xr-x  1 root  wheel      6 Dec 10 15:13 where -> whence
+lrwxr-xr-x  1 root  wheel      6 Dec 10 15:13 which -> whence
+-rw-r--r--  1 root  wheel   2322 Feb 23  2019 alias
+-rw-r--r--  1 root  wheel    123 Feb 23  2019 bg
+-rw-r--r--  1 root  wheel     60 Feb 23  2019 bindkey
+-rw-r--r--  1 root  wheel    184 Feb 23  2019 break
+-rw-r--r--  1 root  wheel     81 Feb 23  2019 builtin
+-rw-r--r--  1 root  wheel     62 Feb 23  2019 cap
+-rw-r--r--  1 root  wheel   2719 Feb 23  2019 cd
+-rw-r--r--  1 root  wheel     64 Feb 23  2019 clone
+-rw-r--r--  1 root  wheel    190 Feb 23  2019 colon
+-rw-r--r--  1 root  wheel    566 Feb 23  2019 command
+-rw-r--r--  1 root  wheel     81 Feb 23  2019 comparguments
+-rw-r--r--  1 root  wheel     75 Feb 23  2019 compcall
+-rw-r--r--  1 root  wheel     74 Feb 23  2019 compctl
+-rw-r--r--  1 root  wheel     80 Feb 23  2019 compdescribe
+-rw-r--r--  1 root  wheel     77 Feb 23  2019 compfiles
+-rw-r--r--  1 root  wheel     78 Feb 23  2019 compgroups
+-rw-r--r--  1 root  wheel     77 Feb 23  2019 compquote
+-rw-r--r--  1 root  wheel     76 Feb 23  2019 comptags
+-rw-r--r--  1 root  wheel     75 Feb 23  2019 comptry
+-rw-r--r--  1 root  wheel     78 Feb 23  2019 compvalues
+-rw-r--r--  1 root  wheel    244 Feb 23  2019 continue
+-rw-r--r--  1 root  wheel    729 Feb 23  2019 dirs
+-rw-r--r--  1 root  wheel   3767 Feb 23  2019 disable
+-rw-r--r--  1 root  wheel    682 Feb 23  2019 disown
+-rw-r--r--  1 root  wheel   1144 Feb 23  2019 dot
+-rw-r--r--  1 root  wheel    882 Feb 23  2019 echo
+-rw-r--r--  1 root  wheel     66 Feb 23  2019 echotc
+-rw-r--r--  1 root  wheel     67 Feb 23  2019 echoti
+-rw-r--r--  1 root  wheel   6562 Feb 23  2019 emulate
+-rw-r--r--  1 root  wheel   1262 Feb 23  2019 enable
+-rw-r--r--  1 root  wheel    374 Feb 23  2019 eval
+-rw-r--r--  1 root  wheel    543 Feb 23  2019 exec
+-rw-r--r--  1 root  wheel    531 Feb 23  2019 exit
+-rw-r--r--  1 root  wheel    280 Feb 23  2019 export
+-rw-r--r--  1 root  wheel     68 Feb 23  2019 false
+-rw-r--r--  1 root  wheel   6219 Feb 23  2019 fc
+-rw-r--r--  1 root  wheel    140 Feb 23  2019 fg
+-rw-r--r--  1 root  wheel   5333 Feb 23  2019 functions
+-rw-r--r--  1 root  wheel     62 Feb 23  2019 getcap
+-rw-r--r--  1 root  wheel    147 Feb 23  2019 getln
+-rw-r--r--  1 root  wheel   1840 Feb 23  2019 getopts
+-rw-r--r--  1 root  wheel   2443 Feb 23  2019 hash
+-rw-r--r--  1 root  wheel    791 Feb 23  2019 jobs
+-rw-r--r--  1 root  wheel   1480 Feb 23  2019 kill
+-rw-r--r--  1 root  wheel    323 Feb 23  2019 let
+-rw-r--r--  1 root  wheel   3598 Feb 23  2019 limit
+-rw-r--r--  1 root  wheel    116 Feb 23  2019 log
+-rw-r--r--  1 root  wheel     83 Feb 23  2019 noglob
+-rw-r--r--  1 root  wheel    820 Feb 23  2019 popd
+-rw-r--r--  1 root  wheel   5250 Feb 23  2019 print
+-rw-r--r--  1 root  wheel   2153 Feb 23  2019 printf
+-rw-r--r--  1 root  wheel   1626 Feb 23  2019 pushd
+-rw-r--r--  1 root  wheel    260 Feb 23  2019 pwd
+-rw-r--r--  1 root  wheel   5814 Feb 23  2019 read
+-rw-r--r--  1 root  wheel    928 Feb 23  2019 return
+-rw-r--r--  1 root  wheel     64 Feb 23  2019 sched
+-rw-r--r--  1 root  wheel   2466 Feb 23  2019 set
+-rw-r--r--  1 root  wheel     62 Feb 23  2019 setcap
+-rw-r--r--  1 root  wheel   1599 Feb 23  2019 setopt
+-rw-r--r--  1 root  wheel    422 Feb 23  2019 shift
+-rw-r--r--  1 root  wheel    182 Feb 23  2019 source
+-rw-r--r--  1 root  wheel     63 Feb 23  2019 stat
+-rw-r--r--  1 root  wheel    199 Feb 23  2019 suspend
+-rw-r--r--  1 root  wheel   1212 Feb 23  2019 test
+-rw-r--r--  1 root  wheel    113 Feb 23  2019 times
+-rw-r--r--  1 root  wheel   3704 Feb 23  2019 trap
+-rw-r--r--  1 root  wheel     67 Feb 23  2019 true
+-rw-r--r--  1 root  wheel   1219 Feb 23  2019 ttyctl
+-rw-r--r--  1 root  wheel  21023 Feb 23  2019 typeset
+-rw-r--r--  1 root  wheel   3173 Feb 23  2019 ulimit
+-rw-r--r--  1 root  wheel    485 Feb 23  2019 umask
+-rw-r--r--  1 root  wheel   1282 Feb 23  2019 unhash
+-rw-r--r--  1 root  wheel    555 Feb 23  2019 unlimit
+-rw-r--r--  1 root  wheel    933 Feb 23  2019 unset
+-rw-r--r--  1 root  wheel    506 Feb 23  2019 unsetopt
+-rw-r--r--  1 root  wheel     52 Feb 23  2019 vared
+-rw-r--r--  1 root  wheel   1378 Feb 23  2019 wait
+-rw-r--r--  1 root  wheel   2393 Feb 23  2019 whence
+-rw-r--r--  1 root  wheel   6629 Feb 23  2019 zcompile
+-rw-r--r--  1 root  wheel     72 Feb 23  2019 zformat
+-rw-r--r--  1 root  wheel     63 Feb 23  2019 zftp
+-rw-r--r--  1 root  wheel     52 Feb 23  2019 zle
+-rw-r--r--  1 root  wheel  17096 Feb 23  2019 zmodload
+-rw-r--r--  1 root  wheel     75 Feb 23  2019 zparseopts
+-rw-r--r--  1 root  wheel     64 Feb 23  2019 zprof
+-rw-r--r--  1 root  wheel     63 Feb 23  2019 zpty
+-rw-r--r--  1 root  wheel     76 Feb 23  2019 zregexparse
+-rw-r--r--  1 root  wheel     77 Feb 23  2019 zsocket
+-rw-r--r--  1 root  wheel     64 Feb 23  2019 zstyle
+-rw-r--r--  1 root  wheel     66 Feb 23  2019 ztcp
