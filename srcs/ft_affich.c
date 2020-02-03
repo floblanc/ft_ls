@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_affich.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/29 15:32:51 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/03 16:29:24 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	ft_print_data(t_ls *ls, t_lf *file, size_t f, int next)
 
 	len = 0;
 	go = ((f & GMIN) == 0) + ((f & OMIN) == 0) * 2;
-	if (f & LMIN)
+	if ((f & LMIN) && file->user != NULL)
 	{
 		ft_str_mode(mode, file->st.st_mode, file->pathname, file);
 		ft_printf("%s %*d %*.*s%*.*s%*s %s ", mode, ls->size_link
@@ -109,8 +109,9 @@ static void	ft_print_data(t_ls *ls, t_lf *file, size_t f, int next)
 	}
 	ft_flag_p_f(file->st.st_mode, f, type);
 	link[len] = '\0';
-	ft_printf("%s%.*s%.*s%.*s%s", file->name, type[0] != 0, type, 4 * (len > 0)
-		, " -> ", len, link, ((f & MMIN) && next ? ", " : "\n"));
+	if (((f & LMIN) && file->user) || !(f & LMIN))
+		ft_printf("%s%.*s%.*s%.*s%s", file->name, type[0] != 0, type, 4
+			* (len > 0), " -> ", len, link, ((f & MMIN) && next ? ", " : "\n"));
 }
 
 void		ft_affich(t_ls *ls, int mode)
@@ -122,10 +123,13 @@ void		ft_affich(t_ls *ls, int mode)
 		ft_printf("total %zu\n", ls->total_block);
 	while (i < ls->nb_elem)
 	{
-		if (ls->flag & IMIN)
-			ft_printf("%*zu ", ls->size_ino, ls->file[i]->st.st_ino);
-		if (ls->flag & SMIN)
-			ft_printf("%*zu ", ls->size_block, ls->file[i]->st.st_blocks);
+		if (ls->file[i]->user != NULL)
+		{
+			if (ls->flag & IMIN)
+				ft_printf("%*zu ", ls->size_ino, ls->file[i]->st.st_ino);
+			if (ls->flag & SMIN)
+				ft_printf("%*zu ", ls->size_block, ls->file[i]->st.st_blocks);
+		}
 		ft_print_data(ls, ls->file[i], ls->flag, (ls->file[i + 1] != NULL));
 		i++;
 	}
