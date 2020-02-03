@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/02/03 13:41:56 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:54:50 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,7 @@ int			main(int argc, char **argv)
 	size_t		i;
 
 	i = 0;
-	ls.flag |= CMIN;
 	ft_get_flag(&ls, argc, argv);
-	printf("flag = %zx , flag U = %zx,  flag t = %zx,  flag l = %zx\n", ls.flag, ls.flag & UMAJ, ls.flag & TMIN, ls.flag & LMIN);
 	ft_read_file(&ls);
 	while (ls.dir_read[i])
 	{

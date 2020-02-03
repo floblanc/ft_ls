@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/03 13:43:41 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:53:59 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,11 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 	int j;
 	int	size;
 
-	i = 1;
+	i = 0;
 	size = 0;
 	ft_bzero(ls, sizeof(t_ls));
-	while (i < argc)
+	ls->flag |= CMIN;
+	while (++i < argc)
 	{
 		if (argv[i][0] == '-')
 		{
@@ -123,7 +124,6 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 		}
 		else
 			size++;
-		i++;
 	}
 	if (ls->flag & OMIN || ls->flag & NMIN || ls->flag & GMIN)
 		ls->flag |= LMIN;
