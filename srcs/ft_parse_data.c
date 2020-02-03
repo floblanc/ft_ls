@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_data.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/29 15:57:35 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:12:16 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*ft_get_size(t_lf *file, size_t size, size_t flag)
 		return (NULL);
 	if (flag & HMIN && flag & LMIN)
 		return (ft_less_h_min("BKMGTPE", ret, 0, (int)size));
-	if (!(ret = ft_ulltoa(size)))
+	if (!(ret = ulltoa(size)))
 		ft_exit(2, 0);
 	return (ret);
 }

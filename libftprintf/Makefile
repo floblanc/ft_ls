@@ -6,7 +6,7 @@
 #    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 09:46:56 by maginist          #+#    #+#              #
-#    Updated: 2019/10/17 12:24:00 by floblanc         ###   ########.fr        #
+#    Updated: 2020/02/03 17:17:37 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,6 +127,9 @@ FILES = add_pre_flgs.c\
 	  ft_jump_white_spaces.c\
 	  ft_memndup.c\
 	  ft_strnchr.c\
+	  ft_itoa_unsigned_base.c\
+	  ft_nbrlen_unsigned.c\
+	  ft_pow.c\
 
 # Colors
 _RED = $'\033[31m$'

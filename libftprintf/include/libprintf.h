@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 13:37:06 by maginist          #+#    #+#             */
-/*   Updated: 2019/10/17 12:25:31 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:20:15 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,10 @@ int					ft_charstr(char *s1, char *s2);
 long				ft_atoll(const char *str);
 void				ft_jump_white_spaces(char *str, int *i);
 void				*ft_memndup(unsigned char *s, size_t n);
+char				*ft_itoa_unsigned_base(size_t nb, size_t base, int maj);
+size_t				ft_nbrlen_unsigned(size_t nb);
+ssize_t				ft_pow(ssize_t x, ssize_t y);
+double				ft_pow_double(double x, double y);
+char				*ft_itoa_unsigned(size_t nb);
 
 #endif
