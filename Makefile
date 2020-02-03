@@ -6,14 +6,20 @@
 #    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2020/01/16 10:53:32 by floblanc         ###   ########.fr        #
+#    Updated: 2020/02/03 18:09:51 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
-SRC_NAME =	main.c 				\
+SRC_NAME =	main.c			\
+			ft_affich.c		\
+			ft_get_data.c	\
+			ft_parse_data.c	\
+			ft_parsing.c	\
+			ft_recursif.c	\
+			ft_sort.c		\
 
-SRC_PATH = ./src/
+SRC_PATH = ./srcs/
 
 OBJ_PATH = ./obj/
 
@@ -75,3 +81,7 @@ fclean : clean
 	@echo "$(_BLUE)======< FCLEAN PROJECT & LIBPRINTF DONE >======$(_END)"
 
 re : fclean all
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -c $< -o $@

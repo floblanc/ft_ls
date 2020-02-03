@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/03 17:12:16 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:31:51 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static char	*ft_get_size(t_lf *file, size_t size, size_t flag)
 {
 	char	*ret;
 
+	ret = NULL;
 	if (((file->st.st_mode & S_IFMT) == S_IFCHR
 		|| (file->st.st_mode & S_IFMT) == S_IFBLK))
 		return (NULL);
@@ -63,9 +64,8 @@ static char	*ft_get_date(t_lf *file, size_t *flag)
 	char	*ret;
 	char	*tmp;
 
-	if (*flag & CMIN)
-		date = file->st.st_mtime;
-	else if (*flag & UMIN)
+	date = file->st.st_mtime;
+	if (*flag & UMIN)
 		date = file->st.st_atime;
 	else if (*flag & UMAJ)
 		date = file->st.st_birthtime;

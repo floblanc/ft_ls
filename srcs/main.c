@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/02/03 13:54:50 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:13:11 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void		ft_exit(int mode, char c)
 
 void		ft_new_file(t_ls *ls, char *name)
 {
-	t_lf	**tmp;
 	size_t	i;
 
 	i = 0;

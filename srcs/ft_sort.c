@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:27:27 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/03 17:09:29 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:32:56 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		ft_less_t_cmp(t_lf *f1, t_lf *f2, size_t *flag)
 {
 	double	diff;
 
+	diff = 0;
 	if (*flag & CMIN)
 		diff = difftime(f1->st.st_mtime, f2->st.st_mtime);
 	else if (*flag & UMIN)

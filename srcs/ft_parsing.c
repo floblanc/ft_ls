@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/03 13:53:59 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:32:26 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void		ft_sort_to_read(t_ls *ls, int try)
 
 static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 {
-	size_t		i;
+	int			i;
 	struct stat st;
 	int			try;
 
