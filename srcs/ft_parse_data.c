@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:57:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/03 18:31:51 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/04 17:18:27 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static char	*ft_less_h_min(char *letters, char *ret, int i, int size)
 	double tmp;
 
 	tmp = (double)size;
-	while (tmp / 1024 >= 1)
+	while (tmp / 1000 >= 1)
 	{
 		tmp /= 1024;
 		i++;
 	}
-	size = ((int)(tmp * 100) % 10 < 5 ? (int)(tmp * 10) : (int)(tmp * 10) + 1);
+	size = (int)((tmp + (tmp >= 10 ? 0.5 : 0.05)) * 10);
 	if (tmp >= 10)
 	{
 		if (!(ret = ft_itoa(size)))
@@ -34,9 +34,9 @@ static char	*ft_less_h_min(char *letters, char *ret, int i, int size)
 		if (!(ret = (char*)ft_memalloc(5)))
 			ft_exit(2, 0);
 		ret[0] = (char)((size / 10) + '0');
-		ret[1] = (size % 10 ? '.' : letters[i]);
-		ret[2] = (size % 10 ? (size % 10) + '0' : 0);
-		ret[3] = (size % 10 ? letters[i] : 0);
+		ret[1] = ((size % 10 || letters[i] != 'B') ? '.' : letters[i]);
+		ret[2] = ((size % 10 || letters[i] != 'B') ? (size % 10) + '0' : 0);
+		ret[3] = ((size % 10 || letters[i] != 'B') ? letters[i] : 0);
 	}
 	return (ret);
 }

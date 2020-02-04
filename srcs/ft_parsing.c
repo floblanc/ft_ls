@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/03 18:32:26 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/04 14:15:24 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static void		ft_sort_to_read(t_ls *ls, int try)
 
 	i = 0;
 	if (try == 0)
-		ls->dir_read[ls->nb_dir++] = ft_strdup(".");
+		(ls->flag & DMIN) == 0 ? (ls->dir_read[ls->nb_dir++] = ft_strdup("."))
+		: (ls->file_read[ls->nb_file++] = ft_strdup("."));
 	if (ls->nb_dir)
 	{
 		if (!(ls->current_path = ft_strdup("."))
@@ -73,7 +74,7 @@ static void		ft_chose_flag(char letter, size_t *flag)
 		*flag &= (0xFFFFFFFF - FMAJ);
 	else if (letter == 'F')
 		*flag &= (0xFFFFFFFF - PMIN);
-	else if (letter == 'l')
+	else if (letter == 'l' || letter == 'o' || letter == 'n' || letter == 'g')
 		*flag &= (0xFFFFFFFF - MMIN);
 	else if (letter == 'm')
 		*flag &= (0xFFFFFFFF - LMIN);
@@ -126,7 +127,7 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 			size++;
 	}
 	if (ls->flag & OMIN || ls->flag & NMIN || ls->flag & GMIN)
-		ls->flag |= LMIN;
+		ls->flag |= ((ls->flag & MMIN) == 0 ? LMIN : 0);
 	if (ls->flag & FMIN)
 		ls->flag |= AMIN;
 	ft_get_to_read(ls, (size == 0 ? 1 : size), argc, argv);

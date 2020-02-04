@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_affich.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/03 16:29:24 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/04 17:34:46 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ static void	ft_print_data(t_ls *ls, t_lf *file, size_t f, int next)
 		ft_printf("%s %*d %*.*s%*.*s%*s %s ", mode, ls->size_link
 			, file->st.st_nlink, (-ls->size_user - 2) * ((f & GMIN) == 0)
 			, ls->size_user * ((f & GMIN) == 0), file->user, (-ls->size_grp - 2)
-			* ((f & OMIN) == 0), ls->size_grp * ((f & OMIN) == 0)
-			, file->grp, ls->size_size + (go == 0) * 2, file->size, file->date);
+			* ((f & OMIN) == 0), ls->size_grp * ((f & OMIN) == 0), file->grp
+			, ls->size_size + (go == 0) * 2 + (f & HMIN) / HMIN, file->size, file->date);
 		if (f & LMIN && (file->st.st_mode & S_IFMT) == S_IFLNK)
 			if ((len = readlink(file->pathname, link, 256)) < 0)
 				ft_exit(3, 0);
