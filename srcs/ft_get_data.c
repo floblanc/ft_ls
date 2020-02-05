@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/03 16:24:02 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/05 12:31:22 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_acl(char src[12], char *pathname, mode_t mode, t_lf *file)
 	acl = acl_get_link_np(pathname, ACL_TYPE_EXTENDED);
 	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &dummy) == -1)
 	{
-		acl_free(acl);
+		acl_free(&acl);
 		acl = NULL;
 	}
 	if (listxattr(pathname, NULL, 0, XATTR_NOFOLLOW) > 0)
