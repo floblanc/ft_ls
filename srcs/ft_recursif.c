@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_recursif.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:26:03 by apouchet          #+#    #+#             */
-/*   Updated: 2020/01/29 14:52:20 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/05 20:32:37 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_create_path(char *path, char *file)
 	j = 0;
 	while (j < size_a)
 		new[i++] = path[j++];
-	if (file[0] != '/')
+	if (file[0] != '/' && path[size_a - 1] != '/')
 		new[i++] = '/';
 	j = 0;
 	while (j < size_b)

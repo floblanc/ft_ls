@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:25:32 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/05 12:31:22 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/05 20:18:29 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ static void	ft_acl(char src[12], char *pathname, mode_t mode, t_lf *file)
 	}
 	if (listxattr(pathname, NULL, 0, XATTR_NOFOLLOW) > 0)
 		src[10] = '@';
-	else if (acl != NULL)
+	else if (acl)
 		src[10] = '+';
+	if (acl)
+		free(acl);
 	src[11] = '\0';
 }
 

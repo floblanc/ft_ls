@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/04 14:15:24 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/05 20:26:22 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 		}
 	}
 	ft_sort_to_read(ls, try);
+	ft_strdel(&ls->current_path);
 }
 
 static void		ft_chose_flag(char letter, size_t *flag)
