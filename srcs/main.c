@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/02/05 20:33:57 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/06 14:16:40 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void		ft_exit(int mode, char c)
 		ft_printf("Error malloc\n");
 	else if (mode == 3)
 		ft_printf("Error while readlink\n");
+	else if (mode == 4)
+		ft_printf("ls: -%c: No such file or directory\n", c);
 	exit(mode);
 }
 
@@ -76,6 +78,11 @@ void		ft_read_file(t_ls *ls)
 		}
 		ft_long_format(ls, 2);
 		free(ls->file_read);
+	}
+	else if (ls->file_read)
+	{
+		free(ls->file_read);
+		ls->file_read = 0;
 	}
 }
 

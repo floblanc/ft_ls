@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/05 20:26:22 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:49:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 		{
 			j = 0;
 			while (argv[i][++j])
-				if (!(flag_stocker(argv[i][j], &(ls->flag))))
-					ft_exit(1, argv[i][j]);
+				if (size || !(flag_stocker(argv[i][j], &(ls->flag))))
+					ft_exit((size ? 4 : 1), argv[i][j]);
 		}
 		else
 			size++;
