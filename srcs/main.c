@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/02/06 14:16:40 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/06 16:23:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void		ft_read_dir(t_ls *ls, char *path, int size)
 
 	if (!(ls->file = (t_lf**)ft_memalloc(sizeof(t_lf*) * (size_t)(size + 1))))
 		ft_exit(2, 0);
+	if (ls->current_path)//-------|
+		free(ls->current_path);// |-> pour eviter un leaks de de 2 bits main.c l.73
 	ls->current_path = path;
 	if ((rep = opendir(ls->current_path)) == NULL)
 		ft_printf("ft_ls: %s: %s\n", ls->current_path, strerror(errno));
@@ -81,7 +83,7 @@ void		ft_read_file(t_ls *ls)
 	}
 	else if (ls->file_read)
 	{
-		free(ls->file_read);
+		free(ls->file_read);//evite un leaks de 16 bits de ft_parcing.c l.53
 		ls->file_read = 0;
 	}
 }
