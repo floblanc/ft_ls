@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2020/02/06 11:29:57 by floblanc         ###   ########.fr        #
+#    Updated: 2020/02/19 15:54:35 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,9 @@ INC_PATH = ./include/
 INC_NAME =	ft_ls.h
 
 
-LIBFT				=	./libftprintf/
-LIBFTA				=	libprintf.a
-LIBFTINCLUDES		=	./libftprintf/include/
+LIBFT				=	./libft/
+LIBFTA				=	libft.a
+LIBFTINCLUDES		=	./libft/
 
 CC = gcc
 
