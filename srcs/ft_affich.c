@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_affich.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:28:17 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/05 20:33:23 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/22 13:26:29 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	ft_flag_p_f(mode_t mode, size_t flag, char type[2])
 	type[1] = '\0';
 }
 
-static void	ft_print_data(t_ls *ls, t_lf *file, size_t f, int next)
+static void	ft_print_data(t_ls *ls, t_lf *o, size_t f, int next)
 {
 	char	mode[12];
 	char	type[2];
@@ -95,22 +95,22 @@ static void	ft_print_data(t_ls *ls, t_lf *file, size_t f, int next)
 
 	len = 0;
 	go = ((f & GMIN) == 0) + ((f & OMIN) == 0) * 2;
-	if ((f & LMIN) && file->user != NULL)
+	if ((f & LMIN) && o->user != NULL)
 	{
-		ft_str_mode(mode, file->st.st_mode, file->pathname, file);
+		ft_str_mode(mode, o->st.st_mode, o->pathname, o);
 		ft_printf("%s %*d %*.*s%*.*s%*s %s ", mode, ls->size_link
-			, file->st.st_nlink, (-ls->size_user - 2) * ((f & GMIN) == 0)
-			, ls->size_user * ((f & GMIN) == 0), file->user, (-ls->size_grp - 2)
-			* ((f & OMIN) == 0), ls->size_grp * ((f & OMIN) == 0), file->grp
-			, ls->size_size + (go == 0) * 2 + (f & HMIN) / HMIN, file->size, file->date);
-		if (f & LMIN && (file->st.st_mode & S_IFMT) == S_IFLNK)
-			if ((len = readlink(file->pathname, link, 256)) < 0)
+			, o->st.st_nlink, (-ls->size_user - 2) * ((f & GMIN) == 0)
+			, ls->size_user * ((f & GMIN) == 0), o->user, (-ls->size_grp - 2)
+			* ((f & OMIN) == 0), ls->size_grp * ((f & OMIN) == 0), o->grp
+			, ls->size_size + (go == 0) * 2 + !(!(f & HMIN)), o->size, o->date);
+		if (f & LMIN && (o->st.st_mode & S_IFMT) == S_IFLNK)
+			if ((len = readlink(o->pathname, link, 256)) < 0)
 				ft_exit(3, 0);
 	}
-	ft_flag_p_f(file->st.st_mode, f, type);
+	ft_flag_p_f(o->st.st_mode, f, type);
 	link[len] = '\0';
-	if (((f & LMIN) && file->user) || !(f & LMIN))
-		ft_printf("%s%.*s%.*s%.*s%s", file->name, type[0] != 0, type, 4
+	if (((f & LMIN) && o->user) || !(f & LMIN))
+		ft_printf("%s%.*s%.*s%.*s%s", o->name, type[0] != 0, type, 4
 			* (len > 0), " -> ", len, link, ((f & MMIN) && next ? ", " : "\n"));
 }
 

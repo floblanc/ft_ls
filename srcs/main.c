@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 14:17:43 by floblanc          #+#    #+#             */
-/*   Updated: 2020/02/18 13:40:48 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/02/22 12:07:34 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void		ft_exit(int mode, char c)
 		ft_printf("Error malloc\n");
 	else if (mode == 3)
 		ft_printf("Error while readlink\n");
-	else if (mode == 4)
-		ft_printf("ls: -%c: No such file or directory\n", c);
 	exit(mode);
 }
 
@@ -92,17 +90,27 @@ int			main(int argc, char **argv)
 {
 	t_ls		ls;
 	size_t		i;
+	static int	first = 1;
 
 	i = 0;
 	ft_get_flag(&ls, argc, argv);
 	ft_read_file(&ls);
 	while (ls.dir_read[i])
 	{
-		if (ls.nb_file > 0 || i > 0 || ls.dir_read[i + 1])
-			ft_printf("\n%s:\n", ls.dir_read[i]);
+		if (ls.try > 1 || ls.nb_file > 0 || i > 0 || ls.dir_read[i + 1])
+		{
+			if (first)
+			{
+				first = 0;
+				ft_printf("%s:\n", ls.dir_read[i]);
+			}
+			else
+				ft_printf("\n%s:\n", ls.dir_read[i]);
+		}
 		ft_read_dir(&ls, ls.dir_read[i], ft_dir_size(ls.dir_read[i]));
 		free(ls.dir_read[i++]);
 	}
 	free(ls.dir_read);
+	ft_strdel(&(ls.current_path));
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 19:04:01 by apouchet          #+#    #+#             */
-/*   Updated: 2020/02/18 13:25:59 by apouchet         ###   ########.fr       */
+/*   Updated: 2020/09/01 12:28:00 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,16 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 {
 	int			i;
 	struct stat st;
-	int			try;
 
 	i = 0;
-	try = 0;
 	if (!(ls->dir_read = (char**)ft_memalloc(8 * (size_t)(size + 1)))
 		|| !(ls->file_read = (char**)ft_memalloc(8 * (size_t)(size + 1))))
 		ft_exit(2, 0);
 	while (++i < argc)
 	{
-		if (argv[i][0] != '-')
+		if (argv[i][0] != '-' || (argv[i][0] == '-' && !argv[i][1]) || ls->try)
 		{
-			try++;
+			(ls->try)++;
 			if (lstat(argv[i], &st) == -1)
 				ft_printf("ft_ls: %s: %s\n", argv[i], strerror(errno));
 			else if ((st.st_mode & S_IFMT) == S_IFDIR && !(ls->flag & DMIN))
@@ -65,7 +63,7 @@ static void		ft_get_to_read(t_ls *ls, int size, int argc, char **argv)
 				ls->file_read[ls->nb_file++] = ft_strdup(argv[i]);
 		}
 	}
-	ft_sort_to_read(ls, try);
+	ft_sort_to_read(ls, ls->try);
 	ft_strdel(&ls->current_path);
 }
 
@@ -117,12 +115,12 @@ void			ft_get_flag(t_ls *ls, int argc, char **argv)
 	ls->flag |= CMIN;
 	while (++i < argc)
 	{
-		if (argv[i][0] == '-')
+		if (!(size) && argv[i][0] == '-' && argv[i][1])
 		{
 			j = 0;
 			while (argv[i][++j])
-				if (size || !(flag_stocker(argv[i][j], &(ls->flag)))) //on colle au comportement de ls mais message d'erreur imparfait
-					ft_exit((size ? 4 : 1), argv[i][j]);
+				if (size || !(flag_stocker(argv[i][j], &(ls->flag))))
+					ft_exit(1, argv[i][j]);
 		}
 		else
 			size++;

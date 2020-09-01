@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:22:40 by floblanc          #+#    #+#             */
-/*   Updated: 2020/02/03 17:13:13 by floblanc         ###   ########.fr       */
+/*   Updated: 2020/02/22 11:52:06 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct	s_lf
 typedef struct	s_ls
 {
 	size_t		flag;
+	size_t		try;
 	size_t		nb_file;
 	size_t		nb_dir;
 	char		*current_path;
