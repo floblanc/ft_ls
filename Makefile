@@ -6,7 +6,7 @@
 #    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2020/02/06 11:29:57 by floblanc         ###   ########.fr        #
+#    Updated: 2020/09/29 12:21:12 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIBFTINCLUDES		=	./libftprintf/include/
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 
 # Colors
 CK = $'\033[30m$'
